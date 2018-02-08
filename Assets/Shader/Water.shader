@@ -18,30 +18,49 @@
 		_Bias("Bias Glare", Float) = -1
 	}
 	SubShader{
-			Tags{ "Queue" = "Transparent" "IgnoreProjector" = "True" "RenderType" = "Transparent" }
-			LOD 200
-			Cull Off
-			ZWrite Off
+		GrabPass {
+			"_GrabTexture"
+			Tags { "LightMode" = "Always" "IgnoreProjector"="True" }
+ 		}
+		Tags{ "Queue" = "Transparent" "IgnoreProjector" = "True" "RenderType" = "Transparent" }
+		LOD 200
+		Cull Off
+		ZWrite Off
+		Pass {
+			CGPROGRAM
 
-		CGPROGRAM
-#pragma surface surf Standard fullforwardshadows
+			#pragma vertex vert 
+			#pragma fragment frag
+			#pragma target 3.0
+			#include "UnityCG.cginc"
 
-#pragma target 3.0
-	
-		sampler2D _MainTex;
-
-	struct Input {
-		float2 uv_MainTex;
-	};
-
-	half _Glossiness;
-	half _Metallic;
-	fixed4 _Color;
-
-
-		void surf(Input IN, inout SurfaceOutputStandard o) {
+			struct v2f {
+			float4 vertex : POSITION;
+			float4 uvgrab : TEXCOORD0;
+			float3 uvWave1 : TEXCOORD1;
+			float3 uvWave2 : TEXCOORD2;
+			float4 viewDir : TEXCOORD3;
+			float4 screenPos : TEXCOORD4;
+			float2 uvFoam : TEXCOORD5;	
+			float4 uvgrabDefault : TEXCOORD6;
+			float4 screenPosWithoutVert : TEXCOORD7;
+			};
+		v2f vert (appdata_tan v) {
+			v2f o;
+			float4 oPos = UnityObjectToClipPos(v.vertex);
+			float3 posWorld = mul(unity_ObjectToWorld,v.vertex).xyz;
+			//Gerstner Waves
+			half2
+			//TODO
+			return o;
+		}
+		half4 frag( v2f i ) : COLOR {
+			half4 color;
+			//TODO
+			return color;
+		}
+		ENDCG
+		}	
 	}
-	ENDCG
-	}
-		FallBack "Diffuse"
+	FallBack "Diffuse"
 }
