@@ -10,8 +10,9 @@
 		_Speed ("Wave Speed", Vector) = (1, 1.5, 1, 0.2)
 		_Frequency ("Wave Frequency", Vector) = (5, -7, 2, 3)
 		_Steepness ("Wave Steepness", Vector) = (0.5, 0.05, 0.5, 0.23)
-		_GDirectionAB ("Wave Direction", Vector) = (0.3 ,0.5, 0.85, 0.25)
-		_GDirectionCD ("Wave Direction", Vector) = (0.1 ,0.9, 0.5, 0.5)	
+		_DirectionAB ("Wave Direction", Vector) = (0.3 ,0.5, 0.85, 0.25)
+		_DirectionCD ("Wave Direction", Vector) = (0.1 ,0.9, 0.5, 0.5)	
+		_WaveScale("Waves Scale", Float) = 1
 
 		_FadeDepth  ("Fade Depth", Float) = 1
 		_DistortionVert  ("Vertex Distortion", Float) = 2
@@ -33,7 +34,13 @@
 			#pragma fragment frag
 			#pragma target 3.0
 			#include "UnityCG.cginc"
-
+			float4 _Amplitude;
+			float4 _Frequency;
+			float4 _Steepness; 									
+			float4 _Speed;					
+			float4 _DirectionAB;		
+			float4 _DirectionCD;
+			
 			struct v2f {
 			float4 vertex : POSITION;
 			float4 uvgrab : TEXCOORD0;
@@ -50,7 +57,9 @@
 			float4 oPos = UnityObjectToClipPos(v.vertex);
 			float3 posWorld = mul(unity_ObjectToWorld,v.vertex).xyz;
 			//Gerstner Waves
-			half2
+			half4 directionAB = _Steepness.xxyy * _Amplitude.xxyy * _DirectionAB.xyzw;
+			half4 directionCD = _Steepness.zzww * _Amplitude.zzww * _DirectionCD.xyzw;
+			half3 offsets;
 			//TODO
 			return o;
 		}
