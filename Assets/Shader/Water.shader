@@ -89,7 +89,8 @@
 			float3 posWorld = mul(unity_ObjectToWorld, v.vertex).xyz;			
 			o.uvgrab.xy = (float2(oPos.x, oPos.y*scale) + oPos.w) * 0.5;
 			o.uvgrab.zw = oPos.zw;
-
+			v.vertex.xyz += offsets;
+			o.vertex = UnityObjectToClipPos(v.vertex);
 			float2 time1 = _Time.xx * _Direction.xy;
 			float2 time2 = _Time.xx * _Direction.zw;
 			float2 time3 = _Time.xx * _FoamDirection.xy;
@@ -102,22 +103,26 @@
 			oPos += o.vertex*_DistortionVert;
 			float angle = dot(normalize(posWorld - _WorldSpaceCameraPos.xyz),
 				normalize(mul((float3x3)(unity_ObjectToWorld), v.normal).xyz));
-			o.viewDir.w = abs(1.0 + angle );		
+			o.viewDir.w = abs(1.0 + angle>0?-1:angle);		
 			o.viewDir.xyz = normalize(WorldSpaceViewDir(o.vertex));
 			o.screenPos = ComputeScreenPos(oPos);	
 			o.screenPosWithoutVert = ComputeScreenPos (o.vertex);
 			o.uvgrabDefault.xy = (float2(o.vertex.x, o.vertex.y*scale) + o.vertex.w) * 0.5;
 			o.uvgrabDefault.zw = o.vertex.zw;
-			
-			v.vertex.xyz += offsets;
-			o.vertex = UnityObjectToClipPos(v.vertex);
-			
-			//TODO
 			return o;
 		}
+		sampler2D _CameraDepthTexture;
+		sampler2D _GrabTexture;
 		half4 frag( v2f i ) : COLOR {
 			half4 color;
-			//TODO
+			//二维投影纹理查询，并进行深度值比较
+			half4 grabDefault = tex2Dproj(_GrabTexture, UNITY_PROJ_COORD(i.uvgrabDefault));
+			float sceneZDefault = LinearEyeDepth (SAMPLE_DEPTH_TEXTURE_PROJ(_CameraDepthTexture, 
+				UNITY_PROJ_COORD(i.screenPosWithoutVert)));
+			half2 normal1 = UnpackNormal(tex2D(_Wave1, i.uvWave1.xy)).rg;
+			half3 normal2 = UnpackNormal(tex2D(_Wave2, i.uvWave2.xy + normal1));
+			half3 normal3 = UnpackNormal(tex2D(_Wave2, i.uvWave2.xy/2-_Time.xx * _Direction.zw + normal2.xy));
+				//TODO
 			return color;
 		}
 		ENDCG
