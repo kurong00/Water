@@ -2,21 +2,24 @@
 	Properties{
 		_Color("Main Color", Color) = (1,1,1,1)
 		_ReflectColor("Reflect Color", Color) = (1,1,1,1)
+		_GlareColor ("Glare Color", Color) = (1,1,1,1)
 		_ReflectLevel("Reflect Level", Range(0,1)) = 0.5
 		_FadeColor("Fade Color",Color) = (1,1,1,1)
+		_DepthTransperent  ("Depth Transperent", Range(0, 1)) = 0
 		_ReflectionBrightness("Reflection Brightness", Range(0, 1)) = 0.5 
 		_Direction ("Waves Direction", Vector) = (1.0 ,1.0, -1.0, -1.0)
 		_TexturesScale("Textures Scale", Float) = 1
 		//Gerstner Waves
 		_Amplitude ("Wave Amplitude", Vector) = (0.05 ,0.05, 0.02, 0.03)
-		_Speed ("Wave Speed", Vector) = (1, 1.5, 1, 0.2)
+		_Speed ("Wave Speed", Vector) = (1, 1.5, 2, -2)
 		_Frequency ("Wave Frequency", Vector) = (5, -7, 2, 3)
-		_Steepness ("Wave Steepness", Vector) = (0.5, 0.05, 0.5, 0.23)
+		_Steepness ("Wave Steepness", Vector) = (0.5, 0.05, 0.5, 0.62)
 		_DirectionAB ("Wave Direction1", Vector) = (0.3 ,0.5, 0.85, 0.25)
 		_DirectionCD ("Wave Direction2", Vector) = (0.1 ,0.9, 0.5, 0.5)	
 		_WaveScale("Waves Scale", Float) = 1
 		_Direction ("Waves Direction 1 & 2", Vector) = (0.05 ,0.3, 15, -3)
 		_FoamDirection ("Foam Direction R & G Chanell", Vector) = (0 ,5, -1.0, -1.0)
+		_FoamIntensity("Foam Intensity", Float) = 1
 		_FadeDepth  ("Fade Depth", Float) = 1
 		_DistortionVert  ("Vertex Distortion", Float) = 2
 		_Bias("Bias Glare", Float) = -1
@@ -53,13 +56,19 @@
 			float4 _DirectionCD;
 			float4 _Direction;
 			float4 _FoamDirection;
+			float4 _Color;
+			float4 _GlareColor;
+			float4 _FadeColor;
+			float4 _ReflectionColor;
 			float _ReflectionBrightness;
+			float _FoamIntensity;
 			sampler2D _Wave1;
 			sampler2D _Wave2;
 			sampler2D _Foam;
-			float _FadeBlend;
+			float _FadeBlend1;
 			float _FadeBlend2;
 			float _FadeDepth;
+			float _DepthTransperent;
 			float4 _Wave1_ST;
 			float4 _Wave2_ST;
 			float4 _Foam_ST;
@@ -135,7 +144,6 @@
 			half2 normal1 = UnpackNormal(tex2D(_Wave1, i.uvWave1.xy)).rg;
 			half3 normal2 = UnpackNormal(tex2D(_Wave2, i.uvWave2.xy + normal1));
 			half3 normal3 = UnpackNormal(tex2D(_Wave2, i.uvWave2.xy/2-_Time.xx * _Direction.zw + normal2.xy));
-			half foam1 = tex2D(_Foam,i.uvFoam);
 			half fresnel = pow(1-max(0,normal2*i.viewDir),4);
 			float2 offset = normal2.xy*_Direction /1000;
 			offset += clamp(i.uvWave2.z*normal1*4 +  
@@ -152,31 +160,35 @@
 			screenPosOffsetWithRipples.xy = (offset +  i.uvWave2.z/3) * i.uvgrab.z + i.screenPos.xy;
 			screenPosOffsetWithRipples.zw = i.screenPos.zw;
 			half4 reflection = tex2Dproj(_ReflectionTex, UNITY_PROJ_COORD(screenPosOffsetWithRipples));
-			reflection = lerp((reflection+_ReflectionBrightness)/2, reflection, 1-_LightColor0.w);
+			reflection = lerp((reflection+_ReflectionBrightness)/2, reflection, 1-_LightColor.w);
 			reflection -= i.uvWave2.z*_LightColor.w/3;
 			half4 grab = tex2Dproj(_GrabTexture, UNITY_PROJ_COORD(i.uvgrab));
 			color = grab;
 			float sceneZ = LinearEyeDepth (SAMPLE_DEPTH_TEXTURE_PROJ(_CameraDepthTexture, UNITY_PROJ_COORD(screenPosOffset)));
 			float deltaZ =  sceneZ-i.screenPos.z;
 			float fadeDepth = saturate (_FadeDepth * deltaZ);
-			float fadeBlend = saturate (_FadeBlend * deltaZ);
+			float fadeBlend1 = saturate (_FadeBlend1 * deltaZ);
 			float fadeBlend2 = saturate (_FadeBlend2 * deltaZ);
-
 			if(sceneZ < i.screenPos.z)
 			{	
 				fadeDepth = saturate (_FadeDepth * (sceneZDefault - i.screenPos.z));
-				fadeBlend = saturate (_FadeBlend * (sceneZDefault - i.screenPos.z));
+				fadeBlend1 = saturate (_FadeBlend1 * (sceneZDefault - i.screenPos.z));
 				fadeBlend2 = saturate (_FadeBlend2 * (sceneZDefault - i.screenPos.z));
-				col = grabDefault;
+				color = grabDefault;
 				grab = grabDefault;
 			}
-			fadeBlend = 1 - fadeBlend;
+			fadeBlend1 = 1 - fadeBlend1;
 			half glare = lerp(normal3.r, normal3.g, normal2.x * i.viewDir.w);
 			half4 glareColor = _LightColor*_GlareColor * pow(glare,2);
 			color = lerp(color * _Color, lerp(color * _FadeColor + color * i.uvWave1.z *_DepthTransperent,
 				 _FadeColor*_LightColor, _DepthTransperent), fadeDepth);
 			half4 reflectColor = reflection * _ReflectionColor * fresnel;
-
+			color += (glareColor + reflectColor)*saturate(i.uvWave2.z)/3;
+			half4 foam = tex2D(_Foam,i.uvFoam) * _LightColor * _FoamIntensity;
+			foam = (1 - foam)*color + foam;
+			color = lerp(color, foam, fadeBlend1);
+			color = lerp(grab, color, fadeBlend2);
+			UNITY_APPLY_FOG(i.fogCoord, color);
 			return color;
 		}
 		ENDCG
