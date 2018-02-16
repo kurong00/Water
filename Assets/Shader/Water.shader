@@ -95,18 +95,19 @@
 				float scale = 1.0;
 			#endif
 			//Gerstner Waves
+			float3 posWorld = mul(unity_ObjectToWorld, v.vertex).xyz;	
 			half4 directionAB = _Steepness.xxyy * _Amplitude.xxyy * _DirectionAB.xyzw;
 			half4 directionCD = _Steepness.zzww * _Amplitude.zzww * _DirectionCD.xyzw;
+			half4 dotDirectABCD = _Frequency.xyzw * half4(dot(_DirectionAB.xy,posWorld),
+				dot(_DirectionCD.xy,posWorld),dot(_DirectionAB.zw,posWorld),dot(_DirectionCD.zw,posWorld));
 			half4 time = fmod(_Time.y * _Speed, 6.2831);
-			half4 CosParam = cos(directionAB*directionCD+time);
-			half4 SinParam = sin(directionAB*directionCD+time);
+			half4 CosParam = cos(dotDirectABCD+time);
+			half4 SinParam = sin(dotDirectABCD+time);
 			half3 offsets;
 			offsets.x = dot(CosParam,half4(directionAB.xz, directionCD.xz));
 			offsets.y = dot(SinParam,_Amplitude);
 			offsets.z = dot(CosParam,half4(directionAB.yw, directionCD.yw));
-			
 			float4 oPos = UnityObjectToClipPos(v.vertex);
-			float3 posWorld = mul(unity_ObjectToWorld, v.vertex).xyz;			
 			o.uvgrab.xy = (float2(oPos.x, oPos.y*scale) + oPos.w) * 0.5;
 			o.uvgrab.zw = oPos.zw;
 			v.vertex.xyz += offsets;
