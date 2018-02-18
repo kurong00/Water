@@ -43,7 +43,6 @@
 		ZWrite Off
 		Pass {
 			CGPROGRAM
-
 			#pragma vertex vert 
 			#pragma fragment frag
 			#pragma target 3.0
@@ -90,46 +89,48 @@
 		v2f vert (appdata_tan v) {
 			v2f o;
 			#if UNITY_UV_STARTS_AT_TOP
-				float scale = -1.0;
+			float scale = -1.0;
 			#else
-				float scale = 1.0;
+			float scale = 1.0;
 			#endif
-			//Gerstner Waves
-			float3 posWorld = mul(unity_ObjectToWorld, v.vertex).xyz;	
-			half4 directionAB = _Steepness.xxyy * _Amplitude.xxyy * _DirectionAB.xyzw;
-			half4 directionCD = _Steepness.zzww * _Amplitude.zzww * _DirectionCD.xyzw;
-			half4 dotDirectABCD = _Frequency.xyzw * half4(dot(_DirectionAB.xy,posWorld),
-				dot(_DirectionCD.xy,posWorld),dot(_DirectionAB.zw,posWorld),dot(_DirectionCD.zw,posWorld));
-			half4 time = fmod(_Time.y * _Speed, 6.2831);
-			half4 CosParam = cos(dotDirectABCD+time);
-			half4 SinParam = sin(dotDirectABCD+time);
-			half3 offsets;
-			offsets.x = dot(CosParam,half4(directionAB.xz, directionCD.xz));
-			offsets.y = dot(SinParam,_Amplitude);
-			offsets.z = dot(CosParam,half4(directionAB.yw, directionCD.yw));
 			float4 oPos = UnityObjectToClipPos(v.vertex);
-			o.uvgrab.xy = (float2(oPos.x, oPos.y*scale) + oPos.w) * 0.5;
-			o.uvgrab.zw = oPos.zw;
-			v.vertex.xyz += offsets;
-			o.vertex = UnityObjectToClipPos(v.vertex);
+			float3 posWorld = mul(unity_ObjectToWorld, v.vertex).xyz;
+			//Gerstner Waves
+			half3 offsets;
+			half4 AB = _Steepness.xxyy * _Amplitude.xxyy * _DirectionAB.xyzw;
+			half4 CD = _Steepness.zzww * _Amplitude.zzww * _DirectionCD.xyzw;
+			half4 dotABCD = _Frequency.xyzw * half4(dot(_DirectionAB.xy, posWorld.xz), 
+					dot(_DirectionAB.zw, posWorld.xz), dot(_DirectionCD.xy, posWorld.xz), 
+					dot(_DirectionCD.zw,  posWorld.xz));
+			half4 TIME = fmod(_Time.y * _Speed, 6.2831);
+			half4 CosParam = cos (dotABCD + TIME);
+			half4 SinParam = sin (dotABCD + TIME);
+			offsets.x = dot(CosParam, half4(AB.xz, CD.xz));
+			offsets.z = dot(CosParam, half4(AB.yw, CD.yw));
+			offsets.y = dot(SinParam, _Amplitude);
 			float2 time1 = _Time.xx * _Direction.xy;
 			float2 time2 = _Time.xx * _Direction.zw;
 			float2 time3 = _Time.xx * _FoamDirection.xy;
+
 			half2 scaleeUv = -posWorld.xz / _TexturesScale;
+			o.uvWave2.z = 0;
+			v.vertex.xyz += offsets;
+			o.vertex = UnityObjectToClipPos(v.vertex);
+			o.uvgrabDefault.xy = (float2(o.vertex.x, o.vertex.y*scale) + o.vertex.w) * 0.5;
+			o.uvgrabDefault.zw = o.vertex.zw;
+			oPos += o.vertex*_DistortionVert;
+			o.uvgrab.xy = (float2(oPos.x, oPos.y*scale) + oPos.w) * 0.5;
+			o.uvgrab.zw = oPos.zw;
 			o.uvWave1.xy = scaleeUv * _Wave1_ST.xy + _Wave1_ST.w  + time1;
 			o.uvWave2.xy = scaleeUv * _Wave2_ST.xy + _Wave2_ST.w  + time2;
-			o.uvWave1.z = offsets.y;
-			o.uvWave2.z = 0;
 			o.uvFoam = scaleeUv * _Foam_ST.xy + _Foam_ST.w  + time3;
-			oPos += o.vertex*_DistortionVert;
+			o.uvWave1.z = offsets.y;
 			float angle = dot(normalize(posWorld - _WorldSpaceCameraPos.xyz),
 				normalize(mul((float3x3)(unity_ObjectToWorld), v.normal).xyz));
 			o.viewDir.w = abs(1.0 + angle>0?-1:angle);		
 			o.viewDir.xyz = normalize(WorldSpaceViewDir(o.vertex));
 			o.screenPos = ComputeScreenPos(oPos);	
 			o.screenPosWithoutVert = ComputeScreenPos (o.vertex);
-			o.uvgrabDefault.xy = (float2(o.vertex.x, o.vertex.y*scale) + o.vertex.w) * 0.5;
-			o.uvgrabDefault.zw = o.vertex.zw;
 			return o;
 		}
 		sampler2D _CameraDepthTexture;
