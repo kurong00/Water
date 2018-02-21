@@ -2,6 +2,8 @@ Shader "WaterShader/Water" {
 	Properties {
 		_Color ("Main Color", Color) = (1,1,1,1)
 		_GlareColor ("Glare Color", Color) = (1,1,1,1)
+		_Bias("Bias Glare", Float) = -1
+		_Scale("Scale Glare", Float) = 10
 		_FadeColor ("Fade Color", Color) = (1,1,1,1)
 		_ReflectionColor ("Reflection Color", Color) = (1,1,1,1)
 		_ReflectionBrightness("Reflection Brightness", Range(0, 1)) = 0.5 
@@ -15,9 +17,6 @@ Shader "WaterShader/Water" {
 		_TransperentDepth  ("Transperent Depth ", Range(0, 1)) = 0
 		_DistortionNormal  ("Distortion Normal", Float) = 400
 		_DistortionVert  ("Per Vertex Distortion", Float) = 1
-		_Bias("Bias Glare", Float) = -1
-		_Scale("Scale Glare", Float) = 10
-		_Power("Power Glare", Float) = 2
 		//Gerstner Waves
 		_Amplitude ("Wave Amplitude", Vector) = (0.05 ,0.05, 0.02, 0.03)
 		_Speed ("Wave Speed", Vector) = (1, 1.5, 2, -2)
@@ -27,8 +26,8 @@ Shader "WaterShader/Water" {
 		_DirectionCD ("Wave Direction2", Vector) = (0.1 ,0.9, 0.5, 0.5)	
 		_WaveScale("Waves Scale", Float) = 1
 		_TexturesScale("Textures Scale", Float) = 1
-}
-SubShader{
+	}
+	SubShader{
 		GrabPass {
 			"_GrabTexture"
 			Tags { "LightMode" = "Always" "IgnoreProjector"="True" }
@@ -46,6 +45,8 @@ SubShader{
 			
 			float4 _Color;
 			float4 _GlareColor;
+			float _Bias;
+			float _Scale;
 			float4 _FadeColor;
 			float4 _ReflectionColor;
 			float _ReflectionBrightness;
@@ -117,7 +118,7 @@ SubShader{
 			
 			float angle = dot(normalize(posWorld - _WorldSpaceCameraPos.xyz),
 				normalize(mul((float3x3)(unity_ObjectToWorld), v.normal).xyz));
-			o.viewDir.w = pow(abs(1.0 + angle>0?-1:angle),1);		
+			o.viewDir.w = pow(abs(1.0 + angle>0?-1:angle),1)*_Scale + _Bias;		
 			o.viewDir.xyz = normalize(WorldSpaceViewDir(o.vertex));
 			o.screenPos = ComputeScreenPos(oPos);	
 			o.screenPosWithoutVert = ComputeScreenPos (o.vertex);
@@ -132,7 +133,7 @@ SubShader{
 		sampler2D _CameraDepthTexture;
 		sampler2D _GrabTexture;
 		sampler2D _ReflectionTex;
-		float4 _LightColor; 
+		float4 _LightColor0; 
 		half4 frag( v2f i ) : COLOR
 		{	
 			half4 color;
@@ -159,8 +160,8 @@ SubShader{
 			screenPosOffsetWithRipples.xy = (offset +  i.uvWave2.z/3) * i.uvgrab.z + i.screenPos.xy;
 			screenPosOffsetWithRipples.zw = i.screenPos.zw;
 			half4 reflection = tex2Dproj(_ReflectionTex, UNITY_PROJ_COORD(screenPosOffsetWithRipples));
-			reflection = lerp((reflection+_ReflectionBrightness)/2, reflection, 1-_LightColor.w);
-			reflection -= i.uvWave2.z*_LightColor.w/3;
+			reflection = lerp((reflection+_ReflectionBrightness)/2, reflection, 1-_LightColor0.w);
+			reflection -= i.uvWave2.z*_LightColor0.w/3;
 			half4 grab = tex2Dproj(_GrabTexture, UNITY_PROJ_COORD(i.uvgrab));
 			color = grab;
 			float sceneZ = LinearEyeDepth (SAMPLE_DEPTH_TEXTURE_PROJ(_CameraDepthTexture, UNITY_PROJ_COORD(screenPosOffset)));
@@ -178,9 +179,9 @@ SubShader{
 			}
 			fadeBlend1 = 1 - fadeBlend1;
 			half glare = lerp(normal3.r, normal3.g, normal2.x * i.viewDir.w);
-			half4 glareColor = _LightColor*_GlareColor * pow(glare,2);
+			half4 glareColor = _LightColor0*_GlareColor * pow(glare,2);
 			color = lerp(color * _Color, lerp(color * _FadeColor + color * i.uvWave1.z *_TransperentDepth,
-				 _FadeColor*_LightColor, _TransperentDepth), fadeDepth);
+				 _FadeColor*_LightColor0, _TransperentDepth), fadeDepth);
 			half4 reflectColor = reflection * _ReflectionColor * fresnel;
 			
 			color += glareColor;
