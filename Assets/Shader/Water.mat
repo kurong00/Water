@@ -48,11 +48,11 @@ Material:
     - _R0: 0.05
     - _ReflectionBrightness: 0.206
     - _Scale: 3.7
-    - _TexturesScale: 20
+    - _TexturesScale: 10
     - _TransperentDepth: 0
     - _WaveScale: 100
     m_Colors:
-    - _Amplitude: {r: 0.05, g: 0.05, b: 0.02, a: 0.03}
+    - _Amplitude: {r: 0.05, g: -0.01, b: -0.04, a: 0.03}
     - _Color: {r: 0.8161765, g: 0.8161765, b: 0.8161765, a: 1}
     - _Direction: {r: 4.55, g: 4.04, b: 2.6, a: 0.95}
     - _DirectionAB: {r: 0.3, g: 0.5, b: 0.85, a: 0.25}
@@ -69,5 +69,5 @@ Material:
     - _GlareColor: {r: 0.21345155, g: 0.26935926, b: 0.30882353, a: 1}
     - _ReflectionColor: {r: 0.2794118, g: 0.2794118, b: 0.2794118, a: 0.341}
     - _Speed: {r: 1, g: 1.5, b: 2, a: -2}
-    - _Steepness: {r: 0.5, g: 0.05, b: 0.5, a: 0.62}
+    - _Steepness: {r: 4.57, g: 1.88, b: 0.5, a: 0.62}
     - _lareColor: {r: 1, g: 1, b: 1, a: 1}
