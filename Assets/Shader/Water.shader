@@ -133,6 +133,8 @@ Shader "WaterShader/Water" {
 		sampler2D _CameraDepthTexture;
 		sampler2D _GrabTexture;
 		sampler2D _ReflectionTex;
+		sampler2D _WaterDisplacementTexture;
+		float4x4 _projectiveMatrWaves;
 		float4 _LightColor0; 
 		half4 frag( v2f i ) : COLOR
 		{	
