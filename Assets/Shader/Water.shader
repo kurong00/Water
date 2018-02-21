@@ -136,7 +136,7 @@ SubShader{
 		half4 frag( v2f i ) : COLOR
 		{	
 			half4 color;
-					//二维投影纹理查询，并进行深度值比较
+			//二维投影纹理查询，并进行深度值比较
 			half4 grabDefault = tex2Dproj(_GrabTexture, UNITY_PROJ_COORD(i.uvgrabDefault));
 			float sceneZDefault = LinearEyeDepth (SAMPLE_DEPTH_TEXTURE_PROJ(_CameraDepthTexture, 
 					UNITY_PROJ_COORD(i.screenPosWithoutVert)));
