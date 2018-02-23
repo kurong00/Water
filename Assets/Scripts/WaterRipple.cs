@@ -27,20 +27,20 @@ public class WaterRipple : MonoBehaviour {
     Transform oldTransform;
 
     [Range(20, 200)]
-    public int UpdateFPS = 60;
+    public int updateFPS = 60;
     //是否使用多线程计算
-    public bool UseMultipleThread;
+    public bool useMultipleThread;
     //计算波纹纹理的分辨率
-    public int ResolutionTexture = 128;
+    public int resolutionTexture = 128;
     //水波纹的阻尼
-    public float Damping;
+    public float damping;
     [Range(0.0001f, 2)]
-    public float SpreadSpeed = 1.5f;
+    public float spreadSpeed = 1.5f;
     //是否模糊化处理水波
-    public bool UseSmoothWaves;
+    public bool useSmoothWaves;
     //无限水面时需要同时开启
-    public bool UseProjectedWaves;
-    public Texture2D CutOutTexture;
+    public bool useProjectedWaves;
+    public Texture2D cutOutTexture;
 
     void Awake()
     {
@@ -54,7 +54,7 @@ public class WaterRipple : MonoBehaviour {
         directionCD = water.sharedMaterial.GetVector("_DirectionCD");
         scaleBounds = GetComponent<MeshRenderer>().bounds.size;
         InitRipple();
-        if (UseMultipleThread)
+        if (useMultipleThread)
         {
             currentThread = new Thread(UpdateRipple);
             currentThread.Start();
@@ -68,7 +68,7 @@ public class WaterRipple : MonoBehaviour {
 
     private void FixedUpdate()
     {
-        if (!UseMultipleThread)
+        if (!useMultipleThread)
             CalculateRippleTexture();
         waterDisplacementTexture.SetPixels(colors);
         waterDisplacementTexture.Apply(false);
@@ -80,27 +80,27 @@ public class WaterRipple : MonoBehaviour {
 
     void InitRipple()
     {
-        waterDisplacementTexture = new Texture2D(ResolutionTexture, ResolutionTexture, TextureFormat.RGBA32, false);
+        waterDisplacementTexture = new Texture2D(resolutionTexture, resolutionTexture, TextureFormat.RGBA32, false);
         waterDisplacementTexture.wrapMode = TextureWrapMode.Clamp;
         waterDisplacementTexture.filterMode = FilterMode.Bilinear;
         Shader.SetGlobalTexture("_WaterDisplacementTexture", waterDisplacementTexture);
-        wavePoints = new Vector3[ResolutionTexture * ResolutionTexture];
-        colors = new Color[ResolutionTexture * ResolutionTexture];
-        waveAcceleration = new Vector2[ResolutionTexture, ResolutionTexture];
-        for(int i = 0; i < ResolutionTexture * ResolutionTexture; i++)
+        wavePoints = new Vector3[resolutionTexture * resolutionTexture];
+        colors = new Color[resolutionTexture * resolutionTexture];
+        waveAcceleration = new Vector2[resolutionTexture, resolutionTexture];
+        for(int i = 0; i < resolutionTexture * resolutionTexture; i++)
         {
             colors[i] = Color.black;
             wavePoints[i] = Vector3.zero;
         }
-        for (int i = 0; i < ResolutionTexture; i++)
-            for (int j = 0; j < ResolutionTexture; j++)
+        for (int i = 0; i < resolutionTexture; i++)
+            for (int j = 0; j < resolutionTexture; j++)
                 waveAcceleration[i, j] = Vector2.zero;
-        if(!CutOutTexture)
+        if(!cutOutTexture)
         {
-            //var scaleOfCutOutTexture = ScaleTexture(CutOutTexture, ResolutionTexture, ResolutionTexture);
-            var scaleOfCutOutTexture = CutOutTexture;
+            //var scaleOfCutOutTexture = ScaleTexture(cutOutTexture, resolutionTexture, resolutionTexture);
+            var scaleOfCutOutTexture = cutOutTexture;
             var colors = scaleOfCutOutTexture.GetPixels();
-            cutOutTextureGray = new float[ResolutionTexture * ResolutionTexture];
+            cutOutTextureGray = new float[resolutionTexture * resolutionTexture];
             for (int i = 0; i < colors.Length; i++)
                 //直接采用心理学灰度值公式
                 //https://en.wikipedia.org/wiki/Grayscale
@@ -113,84 +113,84 @@ public class WaterRipple : MonoBehaviour {
     {
         updateDateTime = DateTime.UtcNow;
         threadDeltaTime = (DateTime.UtcNow - updateDateTime).TotalMilliseconds / 1000;
-        var sleepTime = (int)(1000f / UpdateFPS - threadDeltaTime);
+        var sleepTime = (int)(1000f / updateFPS - threadDeltaTime);
         if (sleepTime > 0)
             Thread.Sleep(sleepTime);
         //TODO
     }
     void CalculateRippleTexture()
     {
-        if (UseProjectedWaves)
+        if (useProjectedWaves)
             UpdateProjector();
         int x, y;
         float waveSmooth,waveLines;
         for(int i = 0; i < wavePoints.Length; i++)
         {
-            if (i >= ResolutionTexture + 1 && 
-                i < wavePoints.Length - 1 - ResolutionTexture&&i%ResolutionTexture>0)
+            if (i >= resolutionTexture + 1 && 
+                i < wavePoints.Length - 1 - resolutionTexture&&i%resolutionTexture>0)
             {
-                x = i % ResolutionTexture;
-                y = i / ResolutionTexture;
+                x = i % resolutionTexture;
+                y = i / resolutionTexture;
                 waveSmooth = (wavePoints[i - 1].y + wavePoints[i + 1].y +
-                    wavePoints[i + ResolutionTexture].y + wavePoints[i - ResolutionTexture].y) / 4;
+                    wavePoints[i + resolutionTexture].y + wavePoints[i - resolutionTexture].y) / 4;
                 waveAcceleration[x, y].y += waveSmooth - waveAcceleration[x, y].x;
             }
         }
-        float currentSpeed = SpreadSpeed;
-        if (!UseMultipleThread)
-            currentSpeed *= Time.fixedDeltaTime * UpdateFPS;
-        for(int i = 0; i < ResolutionTexture; i++)
+        float currentSpeed = spreadSpeed;
+        if (!useMultipleThread)
+            currentSpeed *= Time.fixedDeltaTime * updateFPS;
+        for(int i = 0; i < resolutionTexture; i++)
         {
-            for(int j = 0; j < ResolutionTexture; j++)
+            for(int j = 0; j < resolutionTexture; j++)
             {
                 waveAcceleration[j, i].x += waveAcceleration[j, i].y * currentSpeed;
                 if(cutOutTextureInitialized)
-                    waveAcceleration[j, i].x *= cutOutTextureGray[j + (i * ResolutionTexture)];
-                waveAcceleration[j, i].y *= 1-Damping;
-                waveAcceleration[j, i].x *= 1-Damping;
-                wavePoints[j + (i * ResolutionTexture)].y = waveAcceleration[j, i].x;
-                if (!UseSmoothWaves)
+                    waveAcceleration[j, i].x *= cutOutTextureGray[j + (i * resolutionTexture)];
+                waveAcceleration[j, i].y *= 1-damping;
+                waveAcceleration[j, i].x *= 1-damping;
+                wavePoints[j + (i * resolutionTexture)].y = waveAcceleration[j, i].x;
+                if (!useSmoothWaves)
                 {
                     waveLines = waveAcceleration[j, i].x * textureColorMultiplier;
                     if (waveLines >= 0)
-                        colors[j + (i * ResolutionTexture)].r = waveLines;
+                        colors[j + (i * resolutionTexture)].r = waveLines;
                     else
-                        colors[j + (i * ResolutionTexture)].g = -waveLines;
+                        colors[j + (i * resolutionTexture)].g = -waveLines;
                 }
             }
         }
-        if (UseSmoothWaves)
+        if (useSmoothWaves)
         {
-            for (int i = 2; i < ResolutionTexture-2; i++)
+            for (int i = 2; i < resolutionTexture-2; i++)
             {
-                for (int j = 2; j < ResolutionTexture-2; j++)
+                for (int j = 2; j < resolutionTexture-2; j++)
                 {
-                    waveLines = (wavePoints[j + (i * ResolutionTexture) - 2].y * 0.2f
-                            + wavePoints[j + (i * ResolutionTexture) - 1].y * 0.4f
-                            + wavePoints[j + (i * ResolutionTexture)].y * 0.6f
-                            + wavePoints[j + (i * ResolutionTexture) + 1].y * 0.4f
-                            + wavePoints[j + (i * ResolutionTexture) + 2].y * 0.2f
+                    waveLines = (wavePoints[j + (i * resolutionTexture) - 2].y * 0.2f
+                            + wavePoints[j + (i * resolutionTexture) - 1].y * 0.4f
+                            + wavePoints[j + (i * resolutionTexture)].y * 0.6f
+                            + wavePoints[j + (i * resolutionTexture) + 1].y * 0.4f
+                            + wavePoints[j + (i * resolutionTexture) + 2].y * 0.2f
                             ) / 1.6f * textureColorMultiplier;
                     if (waveLines >= 0)
-                        colors[j + (i * ResolutionTexture)].r = waveLines;
+                        colors[j + (i * resolutionTexture)].r = waveLines;
                     else
-                        colors[j + (i * ResolutionTexture)].g = -waveLines;
+                        colors[j + (i * resolutionTexture)].g = -waveLines;
                 }
             }
-            for (int j = 2; j < ResolutionTexture - 2; j++)
+            for (int j = 2; j < resolutionTexture - 2; j++)
             {
-                for (int i = 2; i < ResolutionTexture - 2; i++)
+                for (int i = 2; i < resolutionTexture - 2; i++)
                 {
-                    waveLines = (wavePoints[i + (j * ResolutionTexture) - 2].y * 0.2f
-                            + wavePoints[i + (j * ResolutionTexture) - 1].y * 0.4f
-                            + wavePoints[i + (j * ResolutionTexture)].y * 0.6f
-                            + wavePoints[i + (j * ResolutionTexture) + 1].y * 0.4f
-                            + wavePoints[i + (j * ResolutionTexture) + 2].y * 0.2f
+                    waveLines = (wavePoints[i + (j * resolutionTexture) - 2].y * 0.2f
+                            + wavePoints[i + (j * resolutionTexture) - 1].y * 0.4f
+                            + wavePoints[i + (j * resolutionTexture)].y * 0.6f
+                            + wavePoints[i + (j * resolutionTexture) + 1].y * 0.4f
+                            + wavePoints[i + (j * resolutionTexture) + 2].y * 0.2f
                             ) / 1.6f * textureColorMultiplier;
                     if (waveLines >= 0)
-                        colors[i + (j * ResolutionTexture)].r = waveLines;
+                        colors[i + (j * resolutionTexture)].r = waveLines;
                     else
-                        colors[i + (j * ResolutionTexture)].g = -waveLines;
+                        colors[i + (j * resolutionTexture)].g = -waveLines;
                 }
             }
         }
@@ -198,36 +198,36 @@ public class WaterRipple : MonoBehaviour {
 
     void UpdateProjector()
     {
-        var xOffset = (int)(ResolutionTexture * objectPos.x / scaleBounds.x - projectorPosition.x);
-        var yOffset = (int)(ResolutionTexture * objectPos.y / scaleBounds.y - projectorPosition.y);
+        var xOffset = (int)(resolutionTexture * objectPos.x / scaleBounds.x - projectorPosition.x);
+        var yOffset = (int)(resolutionTexture * objectPos.y / scaleBounds.y - projectorPosition.y);
         projectorPosition.x += xOffset;
         projectorPosition.y += yOffset;
         if (xOffset == 0 && yOffset == 0)
             return;
         if (xOffset >= 0 && yOffset >= 0)
         {
-            for (int i = 1; i < ResolutionTexture; i++)
+            for (int i = 1; i < resolutionTexture; i++)
             {
-                for (int j = 0; j < ResolutionTexture; j++)
+                for (int j = 0; j < resolutionTexture; j++)
                 {
-                    if (i + yOffset > 0 && i + yOffset < ResolutionTexture && j + xOffset > 0 && j + xOffset < ResolutionTexture)
+                    if (i + yOffset > 0 && i + yOffset < resolutionTexture && j + xOffset > 0 && j + xOffset < resolutionTexture)
                     {
                         waveAcceleration[j, i] = waveAcceleration[j + xOffset, i + yOffset];
-                        wavePoints[j + (i * ResolutionTexture)] = wavePoints[j + xOffset + ((i + yOffset) * ResolutionTexture)];
+                        wavePoints[j + (i * resolutionTexture)] = wavePoints[j + xOffset + ((i + yOffset) * resolutionTexture)];
                     }
                 }
             }
         }
         if (xOffset < 0 && yOffset >= 0)
         {
-            for (int i = 0; i < ResolutionTexture; i++)
+            for (int i = 0; i < resolutionTexture; i++)
             {
-                for (int j = ResolutionTexture - 1; j >= 0; j--)
+                for (int j = resolutionTexture - 1; j >= 0; j--)
                 {
-                    if (i + yOffset > 0 && i + yOffset < ResolutionTexture && j + xOffset > 0 && j + xOffset < ResolutionTexture)
+                    if (i + yOffset > 0 && i + yOffset < resolutionTexture && j + xOffset > 0 && j + xOffset < resolutionTexture)
                     {
                         waveAcceleration[j, i] = waveAcceleration[j + xOffset, i + yOffset];
-                        wavePoints[j + (i * ResolutionTexture)] = wavePoints[j + xOffset + ((i + yOffset) * ResolutionTexture)];
+                        wavePoints[j + (i * resolutionTexture)] = wavePoints[j + xOffset + ((i + yOffset) * resolutionTexture)];
                     }
                 }
             }
@@ -235,14 +235,14 @@ public class WaterRipple : MonoBehaviour {
 
         if (xOffset >= 0 && yOffset < 0)
         {
-            for (int i = ResolutionTexture - 1; i >= 0; i--)
+            for (int i = resolutionTexture - 1; i >= 0; i--)
             {
-                for (int j = 0; j < ResolutionTexture; j++)
+                for (int j = 0; j < resolutionTexture; j++)
                 {
-                    if (i + yOffset > 0 && i + yOffset < ResolutionTexture && j + xOffset > 0 && j + xOffset < ResolutionTexture)
+                    if (i + yOffset > 0 && i + yOffset < resolutionTexture && j + xOffset > 0 && j + xOffset < resolutionTexture)
                     {
                         waveAcceleration[j, i] = waveAcceleration[j + xOffset, i + yOffset];
-                        wavePoints[j + (i * ResolutionTexture)] = wavePoints[j + xOffset + ((i + yOffset) * ResolutionTexture)];
+                        wavePoints[j + (i * resolutionTexture)] = wavePoints[j + xOffset + ((i + yOffset) * resolutionTexture)];
                     }
                 }
             }
@@ -250,29 +250,29 @@ public class WaterRipple : MonoBehaviour {
 
         if (xOffset < 0 && yOffset < 0)
         {
-            for (int i = ResolutionTexture - 1; i >= 0; i--)
+            for (int i = resolutionTexture - 1; i >= 0; i--)
             {
-                for (int j = ResolutionTexture - 1; j >= 0; j--)
+                for (int j = resolutionTexture - 1; j >= 0; j--)
                 {
-                    if (i + yOffset > 0 && i + yOffset < ResolutionTexture && j + xOffset > 0 && j + xOffset < ResolutionTexture)
+                    if (i + yOffset > 0 && i + yOffset < resolutionTexture && j + xOffset > 0 && j + xOffset < resolutionTexture)
                     {
                         waveAcceleration[j, i] = waveAcceleration[j + xOffset, i + yOffset];
-                        wavePoints[j + (i * ResolutionTexture)] = wavePoints[j + xOffset + ((i + yOffset) * ResolutionTexture)];
+                        wavePoints[j + (i * resolutionTexture)] = wavePoints[j + xOffset + ((i + yOffset) * resolutionTexture)];
 
                     }
                 }
             }
         }
-        for(int i = 0; i < ResolutionTexture; i++)
+        for(int i = 0; i < resolutionTexture; i++)
         {
             waveAcceleration[0, i] = Vector2.zero;
-            waveAcceleration[ResolutionTexture - 1, i] = Vector2.zero;
-            wavePoints[(i * ResolutionTexture)] = Vector2.zero;
-            wavePoints[ResolutionTexture - 1 + (i * ResolutionTexture)] = Vector2.zero;
+            waveAcceleration[resolutionTexture - 1, i] = Vector2.zero;
+            wavePoints[(i * resolutionTexture)] = Vector2.zero;
+            wavePoints[resolutionTexture - 1 + (i * resolutionTexture)] = Vector2.zero;
 
             waveAcceleration[i, 0] = Vector2.zero;
-            waveAcceleration[i, ResolutionTexture - 1] = Vector2.zero;
-            wavePoints[i + ResolutionTexture - 1] = Vector2.zero;
+            waveAcceleration[i, resolutionTexture - 1] = Vector2.zero;
+            wavePoints[i + resolutionTexture - 1] = Vector2.zero;
             wavePoints[i] = Vector2.zero;
         }
     }
@@ -301,15 +301,15 @@ public class WaterRipple : MonoBehaviour {
         position.z += scaleBounds.z / 2 - oldTransform.position.z;
         position.x /= scaleBounds.x;
         position.z /= scaleBounds.z;
-        position.x *= ResolutionTexture;
-        position.z *= ResolutionTexture;
+        position.x *= resolutionTexture;
+        position.z *= resolutionTexture;
         SetRippleTexture((int)position.x, (int)position.z, velocity);
     }
 
     private void SetRippleTexture(int x, int y, float strength)
     {
         strength /= 100f;
-        if (x >= 2 && x < ResolutionTexture - 2 && y >= 2 && y < ResolutionTexture - 2)
+        if (x >= 2 && x < resolutionTexture - 2 && y >= 2 && y < resolutionTexture - 2)
         {
             waveAcceleration[x, y].y -= strength;
             waveAcceleration[x + 1, y].y -= strength * 0.8f;
@@ -321,7 +321,7 @@ public class WaterRipple : MonoBehaviour {
             waveAcceleration[x - 1, y + 1].y -= strength * 0.7f;
             waveAcceleration[x - 1, y - 1].y -= strength * 0.7f;
 
-            if (x >= 3 && x < ResolutionTexture - 3 && y >= 3 && y < ResolutionTexture - 3)
+            if (x >= 3 && x < resolutionTexture - 3 && y >= 3 && y < resolutionTexture - 3)
             {
                 waveAcceleration[x + 2, y].y -= strength * 0.5f;
                 waveAcceleration[x - 2, y].y -= strength * 0.5f;
