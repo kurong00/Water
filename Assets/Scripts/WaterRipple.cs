@@ -24,6 +24,7 @@ public class WaterRipple : MonoBehaviour {
     Vector3 scaleBounds;
     Thread currentThread;
     float textureColorMultiplier = 10;
+    Transform oldTransform;
 
     [Range(20, 200)]
     public int UpdateFPS = 60;
@@ -43,6 +44,7 @@ public class WaterRipple : MonoBehaviour {
 
     void Awake()
     {
+        oldTransform = transform;
         var water = GetComponent<Renderer>();
         amplitude = water.sharedMaterial.GetVector("_Amplitude");
         frequency = water.sharedMaterial.GetVector("_Frequency");
@@ -73,7 +75,7 @@ public class WaterRipple : MonoBehaviour {
     }
 
     void Update () {
-        objectPos = new Vector2(transform.position.x, transform.position.y);
+        objectPos = new Vector2(oldTransform.position.x, oldTransform.position.y);
 	}
 
     void InitRipple()
@@ -295,8 +297,8 @@ public class WaterRipple : MonoBehaviour {
 
     public void CreateRippleByPosition(Vector3 position, float velocity)
     {
-        position.x += scaleBounds.x / 2 - transform.position.x;
-        position.z += scaleBounds.z / 2 - transform.position.z;
+        position.x += scaleBounds.x / 2 - oldTransform.position.x;
+        position.z += scaleBounds.z / 2 - oldTransform.position.z;
         position.x /= scaleBounds.x;
         position.z /= scaleBounds.z;
         position.x *= ResolutionTexture;
