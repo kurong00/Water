@@ -588,9 +588,38 @@ Prefab:
       propertyPath: m_Size.y
       value: 0.2
       objectReference: {fileID: 0}
+    - target: {fileID: 65931892850886606, guid: 00a5aab985407a44a839321128109f8a,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 00a5aab985407a44a839321128109f8a, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1044207936 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1891242221212810, guid: 00a5aab985407a44a839321128109f8a,
+    type: 2}
+  m_PrefabInternal: {fileID: 1044207935}
+--- !u!114 &1044207937
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1044207936}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34bc8cc9ea71f91488d46b4f879aa711, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  updateFPS: 60
+  useMultipleThread: 0
+  resolutionTexture: 128
+  damping: 0
+  spreadSpeed: 1.5
+  useSmoothWaves: 0
+  useProjectedWaves: 0
+  cutOutTexture: {fileID: 0}
 --- !u!1 &1048044094
 GameObject:
   m_ObjectHideFlags: 0
@@ -619,18 +648,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 1048044094}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0318d72c8fd663849aef150c183b1d08, type: 3}
+  m_Script: {fileID: 11500000, guid: d9043961884321c4eb919eb4bef2d648, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsReversedRipple: 0
-  RippleStrenght: 0.2
-  MaxVelocity: 3
-  RandomRipplesInterval: 0.3
+  randomRippleIntervalTime: 0.3
+  maxSpeed: 3
   reversedRippleDelay: 0.2
-  SplashEffect: {fileID: 1860777851}
-  SplashEffectMoved: {fileID: 0}
-  SplashAudioSource: {fileID: 0}
   splashSizeMultiplier: 2
+  splashEffect: {fileID: 129212, guid: bd3bf0ad7039cae4e92bd458f39aa86f, type: 2}
+  splashEffectMoved: {fileID: 0}
+  isReversedRipple: 0
+  splashAudioSource: {fileID: 0}
+  rippleStrength: 0.2
 --- !u!54 &1048044096
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -707,7 +736,7 @@ Transform:
   m_GameObject: {fileID: 1048044094}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 1, y: 20.5, z: 1}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.8515718, y: 1.8515707, z: 1.8515707}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
@@ -882,11 +911,6 @@ Transform:
   m_Father: {fileID: 1940602745}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
---- !u!1 &1860777851 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1148533447740236, guid: 00a5aab985407a44a839321128109f8a,
-    type: 2}
-  m_PrefabInternal: {fileID: 1044207935}
 --- !u!1 &1940602744
 GameObject:
   m_ObjectHideFlags: 0

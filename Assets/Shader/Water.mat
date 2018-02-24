@@ -46,7 +46,7 @@ Material:
     - _OffsetFresnel: -1.79
     - _Power: 2
     - _R0: 0.05
-    - _ReflectionBrightness: 0.206
+    - _ReflectionBrightness: 0.446
     - _Scale: 3.7
     - _TexturesScale: 10
     - _TransperentDepth: 0

@@ -6,6 +6,7 @@ using System.IO;
 using System.Threading;
 public class WaterRipple : MonoBehaviour {
 
+    float pi2 = 6.2831f;
     Vector4 amplitude;
     Vector4 frequency;
     Vector4 steepness;
@@ -95,7 +96,7 @@ public class WaterRipple : MonoBehaviour {
         for (int i = 0; i < resolutionTexture; i++)
             for (int j = 0; j < resolutionTexture; j++)
                 waveAcceleration[i, j] = Vector2.zero;
-        if(!cutOutTexture)
+        if(cutOutTexture)
         {
             //var scaleOfCutOutTexture = ScaleTexture(cutOutTexture, resolutionTexture, resolutionTexture);
             var scaleOfCutOutTexture = cutOutTexture;
@@ -286,13 +287,57 @@ public class WaterRipple : MonoBehaviour {
         return result;
     }
 
-
-    //Tools 
+    private Vector3 GerstnerRippleWave(Vector2 pos,Vector4 steepness,Vector4 amplitude,
+        Vector4 speed,Vector4 frequency,Vector4 directionAB,Vector4 directionCD)
+    {
+        Vector3 offset = new Vector3();
+        var dotSteepAndAmpX = steepness.x * amplitude.x;
+        var dotSteepAndAmpY = steepness.y * amplitude.y;
+        Vector4 AB = new Vector4(dotSteepAndAmpX * directionAB.x,
+            dotSteepAndAmpX * directionAB.y,
+            dotSteepAndAmpY * directionAB.z,
+            dotSteepAndAmpY * directionAB.w);
+        Vector4 CD = new Vector4(steepness.z * amplitude.z * directionCD.x,
+            steepness.z * amplitude.z * directionCD.y,
+            steepness.z * amplitude.z * directionCD.z,
+            steepness.z * amplitude.z * directionCD.w);
+        float dotA = Vector2.Dot(new Vector2(directionAB.x, directionAB.y), pos);
+        float dotB = Vector2.Dot(new Vector2(directionAB.z, directionAB.w), pos);
+        float dotC = Vector2.Dot(new Vector2(directionCD.x, directionCD.y), pos);
+        float dotD = Vector2.Dot(new Vector2(directionCD.z, directionCD.w), pos);
+        Vector4 dotABCD = new Vector4(dotA * frequency.x, dotB * frequency.y, dotC * frequency.z, dotD * frequency.w);
+        Vector4 time = new Vector4((Time.time * speed.x) % pi2, (Time.time * speed.y) % pi2, (Time.time * speed.z) % pi2, (Time.time * speed.w) % pi2);
+        Vector4 cosParam = new Vector4(Mathf.Cos(dotABCD.x + time.x),
+            Mathf.Cos(dotABCD.y + time.y),
+            Mathf.Cos(dotABCD.z + time.z),
+            Mathf.Cos(dotABCD.w + time.w));
+        Vector4 sinParam = new Vector4(Mathf.Sin(dotABCD.x + time.x),
+            Mathf.Sin(dotABCD.y + time.y),
+            Mathf.Sin(dotABCD.z + time.z),
+            Mathf.Sin(dotABCD.w + time.w));
+        offset.x = Vector4.Dot(cosParam, new Vector4(AB.x, AB.z, CD.x, CD.z));
+        offset.z = Vector4.Dot(cosParam, new Vector4(AB.y, AB.w, CD.y, CD.w));
+        offset.y = Vector4.Dot(sinParam, amplitude);
+        return offset;
+    }
     public Vector3 GetOffsetByPosition(Vector3 position)
     {
+        var pos = GerstnerRippleWave(new Vector2(position.x, position.z), steepness, amplitude, speed, frequency, directionAB, directionCD);
+        pos.y += GetTextureHeightByPosition(position.x, position.y);
+        pos.y += oldTransform.position.y;
+        return pos;
+    }
 
-        //TODO
-        return Vector3.zero;
+    private float GetTextureHeightByPosition(float x, float y)
+    {
+        x /= scaleBounds.x;
+        y /= scaleBounds.y;
+        x *= resolutionTexture;
+        y *= resolutionTexture;
+        if (x >= resolutionTexture || y >= resolutionTexture || x < 0 || y < 0)
+            return 0;
+
+        return waveAcceleration[(int)x, (int)y].x * textureColorMultiplier;
     }
 
     public void CreateRippleByPosition(Vector3 position, float velocity)
