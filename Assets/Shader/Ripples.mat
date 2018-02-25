@@ -29,4 +29,4 @@ Material:
     m_Floats:
     - _RiplesStrength: 2
     m_Colors:
-    - _TintColor: {r: 1, g: 1, b: 1, a: 1}
+    - _TintColor: {r: 0.8897059, g: 0.8897059, b: 0.8897059, a: 1}

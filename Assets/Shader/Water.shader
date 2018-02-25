@@ -41,6 +41,8 @@ Shader "WaterShader/Water" {
 			#pragma vertex vert 
 			#pragma fragment frag
 			#pragma target 3.0
+			#pragma multi_compile editor_on editor_off
+			#pragma multi_compile ripples_off ripples_on
 			#include "UnityCG.cginc"
 			
 			float4 _Color;
@@ -70,6 +72,7 @@ Shader "WaterShader/Water" {
 			float _DistortionVert;
 			float _WaveScale;
 			float _TexturesScale;
+			sampler2D _WaterDisplacementTexture;
 			struct v2f {
 				float4 vertex : POSITION;
 				float4 uvgrab : TEXCOORD0;
@@ -106,6 +109,12 @@ Shader "WaterShader/Water" {
 
 			half2 scaleeUv = -posWorld.xz / _TexturesScale;
 			o.uvWave2.z = 0;
+			#if ripples_on
+				float2 texDisp = tex2Dlod(_WaterDisplacementTexture, float4(mul(_projectiveMatrWaves, v.vertex).xz, 0, 0)).rg;
+				float2 displ = texDisp.r - texDisp.g;
+				v.vertex.y += displ;
+				o.uvWave2.z = (displ*displ * 2 + displ) * 1.5 + offsets.y / 10;
+			#endif
 			v.vertex.xyz += offsets;
 			o.vertex = UnityObjectToClipPos(v.vertex);
 
@@ -133,7 +142,6 @@ Shader "WaterShader/Water" {
 		sampler2D _CameraDepthTexture;
 		sampler2D _GrabTexture;
 		sampler2D _ReflectionTex;
-		sampler2D _WaterDisplacementTexture;
 		float4x4 _projectiveMatrWaves;
 		float4 _LightColor0; 
 		half4 frag( v2f i ) : COLOR
@@ -148,8 +156,9 @@ Shader "WaterShader/Water" {
 			half3 normal3 = UnpackNormal(tex2D(_Wave2, i.uvWave2.xy/2-_Time.xx * _Direction.zw + normal2.xy));
 			half fresnel = pow(1-max(0,normal2*i.viewDir),4);
 			float2 offset = normal2.xy*_Direction /1000;
-			offset += clamp(i.uvWave2.z*normal1*4 +  
-				i.uvWave2.z* i.uvWave2.z*5, 0, 0.4);
+			#if ripples_on
+				offset += clamp(i.uvWave2.z*normal1 * 4 + i.uvWave2.z* i.uvWave2.z * 5, 0, 0.4);
+			#endif
 			float offsetFadeBlend = saturate ((sceneZDefault - i.screenPos.z));
 			offset = pow(offset,3)  + offset/30 + normal1.xy * i.uvWave1.z/8;
 			offset *= offsetFadeBlend * offsetFadeBlend;
@@ -163,7 +172,12 @@ Shader "WaterShader/Water" {
 			screenPosOffsetWithRipples.zw = i.screenPos.zw;
 			half4 reflection = tex2Dproj(_ReflectionTex, UNITY_PROJ_COORD(screenPosOffsetWithRipples));
 			reflection = lerp((reflection+_ReflectionBrightness)/2, reflection, 1-_LightColor0.w);
-			reflection -= i.uvWave2.z*_LightColor0.w/3;
+			#if ripples_on
+				reflection -= i.uvWave2.z*_LightColor0.w / 3;
+			#endif
+			#if editor_on
+				reflection = 0;
+			#endif
 			half4 grab = tex2Dproj(_GrabTexture, UNITY_PROJ_COORD(i.uvgrab));
 			color = grab;
 			float sceneZ = LinearEyeDepth (SAMPLE_DEPTH_TEXTURE_PROJ(_CameraDepthTexture, UNITY_PROJ_COORD(screenPosOffset)));
