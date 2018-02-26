@@ -677,7 +677,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   randomRippleIntervalTime: 0
-  maxSpeed: 1.5
+  maxSpeed: 0.3
   reversedRippleDelay: 0.2
   splashSizeMultiplier: 2
   splashEffect: {fileID: 129212, guid: bd3bf0ad7039cae4e92bd458f39aa86f, type: 2}
@@ -760,7 +760,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1048044094}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1, y: 25.04, z: 1}
+  m_LocalPosition: {x: -20.1, y: 25.04, z: -7.7}
   m_LocalScale: {x: 1.8515718, y: 1.8515707, z: 1.8515707}
   m_Children: []
   m_Father: {fileID: 0}
@@ -778,7 +778,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Density: 700
-  WaveVelocity: 0.05
+  WaveVelocity: 0.5
   slicedAxis: 2
   IsConcave: 0
   VoxelsLimit: 16
@@ -822,12 +822,12 @@ Projector:
   m_GameObject: {fileID: 1524363973}
   m_Enabled: 1
   serializedVersion: 2
-  m_NearClipPlane: 0.07
-  m_FarClipPlane: 31.1
+  m_NearClipPlane: 0
+  m_FarClipPlane: 64.4
   m_FieldOfView: 60
   m_AspectRatio: 1
   m_Orthographic: 1
-  m_OrthographicSize: 50
+  m_OrthographicSize: 51.63
   m_Material: {fileID: 2100000, guid: 44fe8968d8ab8f64b9fdfca31bbf30fe, type: 2}
   m_IgnoreLayers:
     serializedVersion: 2
