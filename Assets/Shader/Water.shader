@@ -73,6 +73,7 @@ Shader "WaterShader/Water" {
 			float _WaveScale;
 			float _TexturesScale;
 			sampler2D _WaterDisplacementTexture;
+			//float4x4 _projectiveMatrWaves;
 			struct v2f {
 				float4 vertex : POSITION;
 				float4 uvgrab : TEXCOORD0;
@@ -111,7 +112,7 @@ Shader "WaterShader/Water" {
 			o.uvWave2.z = 0;
 			#if ripples_on
 				float2 texDisp = tex2Dlod(_WaterDisplacementTexture, float4(mul(_projectiveMatrWaves, v.vertex).xz, 0, 0)).rg;
-				float2 displ = texDisp.r - texDisp.g;
+				float2 displ = texDisp.r + texDisp.g;
 				v.vertex.y += displ;
 				o.uvWave2.z = (displ*displ * 2 + displ) * 1.5 + offsets.y / 10;
 			#endif
@@ -142,7 +143,6 @@ Shader "WaterShader/Water" {
 		sampler2D _CameraDepthTexture;
 		sampler2D _GrabTexture;
 		sampler2D _ReflectionTex;
-		float4x4 _projectiveMatrWaves;
 		float4 _LightColor0; 
 		half4 frag( v2f i ) : COLOR
 		{	

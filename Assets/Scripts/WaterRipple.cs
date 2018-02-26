@@ -26,6 +26,7 @@ public class WaterRipple : MonoBehaviour {
     Thread currentThread;
     float textureColorMultiplier = 10;
     Transform oldTransform;
+    bool canUpdate = true;
 
     [Range(20, 200)]
     public int updateFPS = 60;
@@ -43,8 +44,11 @@ public class WaterRipple : MonoBehaviour {
     public bool useProjectedWaves;
     public Texture2D cutOutTexture;
 
-    void Awake()
+    void OnEnable()
     {
+        canUpdate = true;
+        Shader.EnableKeyword("editor_off");
+        Shader.EnableKeyword("ripples_on");
         oldTransform = transform;
         var water = GetComponent<Renderer>();
         amplitude = water.sharedMaterial.GetVector("_Amplitude");
@@ -63,9 +67,18 @@ public class WaterRipple : MonoBehaviour {
 
     }
 
-    void Start () {
-		
-	}
+    private void OnDestroy()
+    {
+        canUpdate = false;
+    }
+
+    private void OnDisable()
+    {
+        Shader.DisableKeyword("editor_off");
+        Shader.DisableKeyword("ripples_on");
+        canUpdate = false;
+    }
+
 
     private void FixedUpdate()
     {
@@ -113,11 +126,15 @@ public class WaterRipple : MonoBehaviour {
     void UpdateRipple()
     {
         updateDateTime = DateTime.UtcNow;
-        threadDeltaTime = (DateTime.UtcNow - updateDateTime).TotalMilliseconds / 1000;
-        var sleepTime = (int)(1000f / updateFPS - threadDeltaTime);
-        if (sleepTime > 0)
-            Thread.Sleep(sleepTime);
-        //TODO
+        while (canUpdate)
+        {
+            threadDeltaTime = (DateTime.UtcNow - updateDateTime).TotalMilliseconds / 1000;
+            var sleepTime = (int)(1000f / updateFPS - threadDeltaTime);
+            if (sleepTime > 0)
+                Thread.Sleep(sleepTime);
+            //TODO
+            CalculateRippleTexture();
+        }
     }
     void CalculateRippleTexture()
     {

@@ -14,7 +14,7 @@ public class CreateRipple : MonoBehaviour {
     float randomRipplesCurrentTime;
     float triggeredTime;
     bool canCreateRandomRipple;
-    bool canUpdate = true;
+    bool canUpdate;
     
     float currentSpeed;
     Transform oldTransform;
@@ -32,7 +32,7 @@ public class CreateRipple : MonoBehaviour {
     public bool isReversedRipple;
     public AudioSource splashAudioSource;
     public float rippleStrength = 0.1f;
-    void Awake () {
+    void Start () {
         oldTransform = transform;
         reversedVelocityQueue = new Queue<ReversedRipple>();
     }
