@@ -31,7 +31,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _Bias: -1
+    - _Bias: 13.98
     - _DepthTransperent: 0.05
     - _Distortion: 400
     - _DistortionNormal: 400
@@ -52,14 +52,14 @@ Material:
     - _TransperentDepth: 0
     - _WaveScale: 1
     m_Colors:
-    - _Amplitude: {r: 0.05, g: -0.01, b: -0.04, a: 0.03}
+    - _Amplitude: {r: 0.008, g: 0.008, b: 0.008, a: 0.008}
     - _Color: {r: 0.882353, g: 0.9803922, b: 1, a: 1}
     - _Direction: {r: 4.55, g: 4.04, b: 2.6, a: 0.95}
     - _DirectionAB: {r: 0.3, g: 0.5, b: 0.85, a: 0.25}
     - _DirectionCD: {r: 0.1, g: 0.9, b: 0.5, a: 0.5}
     - _FadeColor: {r: 0.4901961, g: 0.8078432, b: 0.909804, a: 1}
     - _FoamDirection: {r: 1, g: 1, b: -1, a: -1}
-    - _Frequency: {r: 5, g: -7, b: 2, a: 3}
+    - _Frequency: {r: 5, g: -3, b: 1, a: 0.8}
     - _GAmplitude: {r: 0.05, g: 0.05, b: 0.02, a: 0.03}
     - _GDirectionAB: {r: 0.3, g: 0.5, b: 0.85, a: 0.25}
     - _GDirectionCD: {r: 0.1, g: 0.9, b: 0.5, a: 0.5}
@@ -68,6 +68,6 @@ Material:
     - _GSteepness: {r: 1, g: 2, b: 1.5, a: 1}
     - _GlareColor: {r: 0.1254902, g: 0.1254902, b: 0.1254902, a: 1}
     - _ReflectionColor: {r: 0.3529412, g: 0.3529412, b: 0.3529412, a: 0.341}
-    - _Speed: {r: 1, g: 1.5, b: 2, a: -2}
-    - _Steepness: {r: 4.57, g: 1.88, b: 0.5, a: 0.62}
+    - _Speed: {r: 2, g: 2, b: 2, a: -2}
+    - _Steepness: {r: 0.05, g: 0.01, b: 0.05, a: 0.97}
     - _lareColor: {r: 1, g: 1, b: 1, a: 1}

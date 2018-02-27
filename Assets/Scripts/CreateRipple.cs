@@ -119,7 +119,7 @@ public class CreateRipple : MonoBehaviour {
             var offset = waterRipple.GetOffsetByPosition(oldTransform.position);
             offset.x = oldTransform.position.x;
             offset.y = oldTransform.position.y;
-            var splash = Instantiate(splashEffect, offset, new Quaternion());
+            var splash = Instantiate(splashEffect, transform.position, new Quaternion());
             Destroy(splash, 2);
         }
         UpdateSplash();
