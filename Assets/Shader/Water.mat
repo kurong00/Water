@@ -31,7 +31,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _Bias: -1
+    - _Bias: -4.75
     - _DepthTransperent: 0.05
     - _Distortion: 400
     - _DistortionNormal: 400
@@ -39,20 +39,20 @@ Material:
     - _EdgeDistortion: 1
     - _FPOW: 5
     - _FadeBlend: 1
-    - _FadeBlend1: 1.1
+    - _FadeBlend1: 3.11
     - _FadeBlend2: 0.33
     - _FadeDepth: 0.05
-    - _FoamIntensity: 26.7
+    - _FoamIntensity: 0
     - _OffsetFresnel: -1.79
     - _Power: 2
     - _R0: 0.05
     - _ReflectionBrightness: 0
     - _Scale: 12
-    - _TexturesScale: 20
+    - _TexturesScale: 15
     - _TransperentDepth: 0
     - _WaveScale: 1
     m_Colors:
-    - _Amplitude: {r: 0.008, g: 0.008, b: 0.008, a: 0.008}
+    - _Amplitude: {r: 0.07, g: 0.04, b: 0.06, a: 0.01}
     - _Color: {r: 0.882353, g: 0.9803922, b: 1, a: 1}
     - _Direction: {r: 0.31, g: 5.51, b: 4.74, a: 2.06}
     - _DirectionAB: {r: 0.3, g: 0.5, b: 0.85, a: 0.25}
