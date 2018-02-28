@@ -23,15 +23,15 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Wave1:
-        m_Texture: {fileID: 2800000, guid: 3277d206997bb4c4ca302d1cf11c532d, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _Wave2:
         m_Texture: {fileID: 2800000, guid: a4ccdc4bc90b7a04cab20a8378eb4802, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Wave2:
+        m_Texture: {fileID: 2800000, guid: 34007ad7da1fac0419026a2ed2bd2652, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _Bias: 4.89
+    - _Bias: -1
     - _DepthTransperent: 0.05
     - _Distortion: 400
     - _DistortionNormal: 400
@@ -39,22 +39,22 @@ Material:
     - _EdgeDistortion: 1
     - _FPOW: 5
     - _FadeBlend: 1
-    - _FadeBlend1: 1
+    - _FadeBlend1: 1.1
     - _FadeBlend2: 0.33
     - _FadeDepth: 0.05
-    - _FoamIntensity: 1
+    - _FoamIntensity: 26.7
     - _OffsetFresnel: -1.79
     - _Power: 2
     - _R0: 0.05
     - _ReflectionBrightness: 0
     - _Scale: 12
-    - _TexturesScale: 100
+    - _TexturesScale: 20
     - _TransperentDepth: 0
     - _WaveScale: 1
     m_Colors:
     - _Amplitude: {r: 0.008, g: 0.008, b: 0.008, a: 0.008}
     - _Color: {r: 0.882353, g: 0.9803922, b: 1, a: 1}
-    - _Direction: {r: 4.55, g: 4.04, b: 2.6, a: 0.95}
+    - _Direction: {r: 0.31, g: 5.51, b: 4.74, a: 2.06}
     - _DirectionAB: {r: 0.3, g: 0.5, b: 0.85, a: 0.25}
     - _DirectionCD: {r: 0.1, g: 0.9, b: 0.5, a: 0.5}
     - _FadeColor: {r: 0.4901961, g: 0.8078432, b: 0.909804, a: 1}
