@@ -434,6 +434,11 @@ Prefab:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114190051903753462, guid: adf60176e38be5f4593a64a56dabd678,
+        type: 2}
+      propertyPath: updateFPS
+      value: 60
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: adf60176e38be5f4593a64a56dabd678, type: 2}
   m_IsPrefabParent: 0
@@ -547,6 +552,7 @@ GameObject:
   - component: {fileID: 822012899}
   - component: {fileID: 822012898}
   - component: {fileID: 822012897}
+  - component: {fileID: 822012901}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -617,6 +623,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 12.908001, y: 0, z: 0}
+--- !u!114 &822012901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 822012896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14079cdf05975cd4e90b8859ae20ff74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 1827876979}
+  speed: 5
 --- !u!1 &941498043
 GameObject:
   m_ObjectHideFlags: 0
@@ -976,7 +995,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Density: 700
-  WaveVelocity: 1
+  WaveVelocity: 0.05
   slicedAxis: 8
   IsConcave: 0
   VoxelsLimit: 16
@@ -1006,7 +1025,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a22829d55716243439023c61f3c17057, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedMultiple: 6
+  speedMultiple: 3
 --- !u!64 &1827876983
 MeshCollider:
   m_ObjectHideFlags: 0
