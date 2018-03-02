@@ -20,7 +20,7 @@ Material:
     m_TexEnvs:
     - _Foam:
         m_Texture: {fileID: 2800000, guid: 47feed899031ac7438bf1babd540ca7f, type: 3}
-        m_Scale: {x: 1, y: 1}
+        m_Scale: {x: 2, y: 5}
         m_Offset: {x: 0, y: 0}
     - _Wave1:
         m_Texture: {fileID: 2800000, guid: a4ccdc4bc90b7a04cab20a8378eb4802, type: 3}
@@ -39,10 +39,10 @@ Material:
     - _EdgeDistortion: 1
     - _FPOW: 5
     - _FadeBlend: 1
-    - _FadeBlend1: 190.57
-    - _FadeBlend2: 17.39
+    - _FadeBlend1: 1
+    - _FadeBlend2: 0.76
     - _FadeDepth: 0.15
-    - _FoamIntensity: 50
+    - _FoamIntensity: 11
     - _OffsetFresnel: -1.79
     - _Power: 2
     - _R0: 0.05
@@ -58,7 +58,7 @@ Material:
     - _DirectionAB: {r: 0.3, g: 0.5, b: 0.85, a: 0.25}
     - _DirectionCD: {r: 0.1, g: 0.9, b: 0.5, a: 0.5}
     - _FadeColor: {r: 0.4901961, g: 0.8078432, b: 0.909804, a: 1}
-    - _FoamDirection: {r: 10, g: 10, b: 10, a: 0}
+    - _FoamDirection: {r: 9.86, g: 15.15, b: 10, a: 0}
     - _Frequency: {r: 5, g: -3, b: 1, a: 0.8}
     - _GAmplitude: {r: 0.05, g: 0.05, b: 0.02, a: 0.03}
     - _GDirectionAB: {r: 0.3, g: 0.5, b: 0.85, a: 0.25}
