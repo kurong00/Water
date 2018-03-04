@@ -376,7 +376,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 686647917}
   m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -121, y: 14, z: -51.7}
+  m_LocalPosition: {x: -121, y: 3.4, z: -51.7}
   m_LocalScale: {x: 2.2207868, y: 2.8013155, z: 2.7336397}
   m_Children: []
   m_Father: {fileID: 1940602745}
@@ -395,10 +395,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minVelocity: 5
   maxVelocity: 10
-  flockSize: 5
+  flockSize: 10
   centerWeight: 10
   velocityWeight: 10
-  separationWeight: 50
+  separationWeight: 100
   followWeight: 3
   randomizeWeight: 1
   prefab: {fileID: 114793922558946132, guid: 92691cd7fc755a04eb09af834d93ad18, type: 2}
@@ -654,7 +654,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a22829d55716243439023c61f3c17057, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedMultiple: 3
+  speedMultiple: 1
 --- !u!64 &1827876983
 MeshCollider:
   m_ObjectHideFlags: 0
