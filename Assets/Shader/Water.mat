@@ -42,7 +42,7 @@ Material:
     - _FadeBlend1: 1
     - _FadeBlend2: 0.76
     - _FadeDepth: 0.15
-    - _FoamIntensity: 11
+    - _FoamIntensity: -0.47
     - _OffsetFresnel: -1.79
     - _Power: 2
     - _R0: 0.05
