@@ -6,8 +6,8 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Ripples
-  m_Shader: {fileID: 4800000, guid: a7dc9c4315582f14999bf08dba1382a7, type: 3}
+  m_Name: Caustic
+  m_Shader: {fileID: 4800000, guid: 527e5208b165de04f84bdfd771159d74, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -19,35 +19,31 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _CausticMask:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
+        m_Texture: {fileID: 2800000, guid: 14998d6d7c26ce343b58fd1ad5ec894e, type: 3}
+        m_Scale: {x: 2, y: 2}
         m_Offset: {x: 0, y: 0}
     - _CausticTex1:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
+        m_Texture: {fileID: 2800000, guid: 9027ea84c75f86e4b844b87a0bd6687f, type: 3}
+        m_Scale: {x: 2, y: 2.5}
         m_Offset: {x: 0, y: 0}
     - _CausticTex2:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
+        m_Texture: {fileID: 2800000, guid: 7b6cdde7f4a58ca47babd57172dba0ef, type: 3}
+        m_Scale: {x: 3, y: 2}
         m_Offset: {x: 0, y: 0}
     - _FalloffTex:
         m_Texture: {fileID: 2800000, guid: 7e84496b10f800a41a55a5f472cad1a7, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _RampStrength:
+    - _WetTex:
         m_Texture: {fileID: 2800000, guid: ca4e75975b529904e82de8c2bcc59335, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _WetTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _ColorStrength: 1
-    - _Distortion: 5
-    - _RiplesStrength: 0.5
-    - _WetStrength: 0.8
+    - _ColorStrength: 0.85
+    - _Distortion: 2
+    - _WetStrength: 0.996
     m_Colors:
-    - _CausticDirection: {r: 1, g: 1, b: -1, a: -1}
-    - _DistortionDirection: {r: 0.5, g: -0.5, b: 0, a: 0}
-    - _TintColor: {r: 0.8897059, g: 0.8897059, b: 0.8897059, a: 1}
+    - _CausticColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _CausticDirection: {r: -2, g: 22, b: 0, a: 15}
+    - _DistortionDirection: {r: 3, g: 2, b: 0, a: 0}
+    - _TintColor: {r: 0.87843144, g: 0.94117653, b: 0.97647065, a: 1}

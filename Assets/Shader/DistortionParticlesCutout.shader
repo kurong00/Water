@@ -1,4 +1,4 @@
-Shader "RealisticWater/ParticlesCutOut" {
+Shader "WaterShader/ParticlesCutOut" {
 	Properties {
 			_TintColor ("Tint Color", Color) = (1,1,1,1)
 			_MainTex ("Base (RGB) Gloss (A)", 2D) = "black" {}
