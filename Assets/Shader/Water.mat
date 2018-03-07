@@ -31,7 +31,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _Bias: -2.66
+    - _Bias: -1
     - _DepthTransperent: 0.05
     - _Distortion: 400
     - _DistortionNormal: 400
@@ -47,8 +47,8 @@ Material:
     - _Power: 2
     - _R0: 0.05
     - _ReflectionBrightness: 0.046
-    - _Scale: 9.63
-    - _TexturesScale: 15
+    - _Scale: 9
+    - _TexturesScale: 20
     - _TransperentDepth: 0
     - _WaveScale: 1
     m_Colors:
@@ -67,7 +67,7 @@ Material:
     - _GSpeed: {r: -0.23, g: -1.25, b: -3, a: 1.5}
     - _GSteepness: {r: 1, g: 2, b: 1.5, a: 1}
     - _GlareColor: {r: 0.1254902, g: 0.1254902, b: 0.1254902, a: 1}
-    - _ReflectionColor: {r: 0.3529412, g: 0.3529412, b: 0.3529412, a: 0.341}
+    - _ReflectionColor: {r: 0.3529412, g: 0.3529412, b: 0.3529412, a: 1}
     - _Speed: {r: 0.2, g: 0.2, b: 2, a: -2}
     - _Steepness: {r: 0.05, g: 0.01, b: 0.05, a: 0.97}
     - _lareColor: {r: 1, g: 1, b: 1, a: 1}

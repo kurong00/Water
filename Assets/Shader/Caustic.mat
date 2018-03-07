@@ -27,7 +27,7 @@ Material:
         m_Scale: {x: 2, y: 2.5}
         m_Offset: {x: 0, y: 0}
     - _CausticTex2:
-        m_Texture: {fileID: 2800000, guid: 7b6cdde7f4a58ca47babd57172dba0ef, type: 3}
+        m_Texture: {fileID: 2800000, guid: 9027ea84c75f86e4b844b87a0bd6687f, type: 3}
         m_Scale: {x: 3, y: 2}
         m_Offset: {x: 0, y: 0}
     - _FalloffTex:
@@ -40,10 +40,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _ColorStrength: 0.85
-    - _Distortion: 2
-    - _WetStrength: 0.996
+    - _Distortion: 8
+    - _WetStrength: 0.556
     m_Colors:
-    - _CausticColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-    - _CausticDirection: {r: -2, g: 22, b: 0, a: 15}
-    - _DistortionDirection: {r: 3, g: 2, b: 0, a: 0}
+    - _CausticColor: {r: 0.79811853, g: 0.8765884, b: 0.89705884, a: 1}
+    - _CausticDirection: {r: -2, g: 5, b: 0, a: -4}
+    - _DistortionDirection: {r: 2, g: -5, b: 0, a: 0}
     - _TintColor: {r: 0.87843144, g: 0.94117653, b: 0.97647065, a: 1}
