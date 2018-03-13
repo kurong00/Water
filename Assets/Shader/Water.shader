@@ -18,7 +18,7 @@ Shader "WaterShader/Water" {
 		_FadeBlend2  ("Fade Blend Transparency", Float) = 1
 		_FadeDepth  ("Fade Depth", Float) = 1
 		_TransperentDepth  ("Depth Transperent", Range(0, 1)) = 0
-		_DistortionNormal  ("Distortion Normal", Float) = 400
+		_Distortion  ("Distortion Normal", Float) = 400
 		_DistortionVert  ("Per Vertex Distortion", Float) = 1
 		
 		_Amplitude ("Wave Amplitude", Vector) = (0.1 ,0.3, 0.2, 0.15)
@@ -74,7 +74,7 @@ Shader "WaterShader/Water" {
 			float _FadeBlend2;
 			float _FadeDepth;
 			float _TransperentDepth;
-			float _DistortionNormal;
+			float _Distortion;
 			float _DistortionVert;
 			float _WaveScale;
 			float _TexturesScale;
@@ -117,8 +117,8 @@ Shader "WaterShader/Water" {
 				half4 CosParam = cos (dotABCD + TIME);
 				half4 SinParam = sin (dotABCD + TIME);
 				offsets.x = dot(CosParam, half4(AB.xz, CD.xz));
-				offsets.z = dot(CosParam, half4(AB.yw, CD.yw));
-				offsets.y = dot(SinParam, _Amplitude);
+				offsets.y = dot(CosParam, half4(AB.yw, CD.yw));
+				offsets.z = dot(SinParam, _Amplitude);
 				half2 scaleeUv = -posWorld.xz / _TexturesScale;
 				o.uvWave2.z = 0;
 				#if ripples_on
@@ -171,7 +171,7 @@ Shader "WaterShader/Water" {
 				half3 normal2 = UnpackNormal(tex2D(_Wave2, i.uvWave2.xy + normal1));
 				half3 normal3 = UnpackNormal(tex2D(_Wave2, i.uvWave2.xy/2-_Time.xx * _Direction.zw + normal2.xy));
 				half fresnel = pow(1-max(0,normal2*i.viewDir),4);
-				float2 offset = normal2.xy*_Direction /1000;
+				float2 offset = normal2.xy * _Distortion /1000;
 				#if ripples_on
 				offset += clamp(i.uvWave2.z*normal1 * 4 + i.uvWave2.z* i.uvWave2.z * 5, 0, 0.4);
 				#endif

@@ -33,7 +33,7 @@ Material:
     m_Floats:
     - _Bias: -1
     - _DepthTransperent: 0.05
-    - _Distortion: 400
+    - _Distortion: 10
     - _DistortionNormal: 400
     - _DistortionVert: 1
     - _EdgeDistortion: 1
@@ -42,7 +42,7 @@ Material:
     - _FadeBlend1: 1
     - _FadeBlend2: 0.76
     - _FadeDepth: 0.15
-    - _FoamIntensity: -0.47
+    - _FoamIntensity: 7.86
     - _OffsetFresnel: -1.79
     - _Power: 2
     - _R0: 0.05

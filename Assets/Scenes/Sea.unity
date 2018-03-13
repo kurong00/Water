@@ -610,6 +610,7 @@ GameObject:
   - component: {fileID: 420018963}
   - component: {fileID: 420018967}
   - component: {fileID: 420018962}
+  - component: {fileID: 420018968}
   m_Layer: 0
   m_Name: Sea
   m_TagString: Untagged
@@ -625,7 +626,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 420018960}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.3, z: 0}
+  m_LocalPosition: {x: 0, y: 11.7, z: 0}
   m_LocalScale: {x: 20, y: 1.3, z: 20}
   m_Children:
   - {fileID: 172789653}
@@ -737,6 +738,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1827876978}
+--- !u!114 &420018968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 420018960}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 997fb2ccf9ba5fb4bb43b6e9820bb7f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ClipPlaneOffset: 0.07
+  CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967279
+  HDR: 0
+  OcclusionCulling: 1
+  RenderingPath: 0
+  TextureScale: 1
+  RenderTextureFormat: 0
+  FilterMode: 0
+  UseRealtimeUpdate: 0
+  FPSWhenMoveCamera: 40
+  FPSWhenStaticCamera: 20
 --- !u!1 &686647917
 GameObject:
   m_ObjectHideFlags: 0
