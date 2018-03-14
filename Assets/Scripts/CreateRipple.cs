@@ -102,7 +102,6 @@ public class CreateRipple : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other.name);
         var temp = other.GetComponent<WaterRipple>();
         if (temp)
             waterRipple = temp;

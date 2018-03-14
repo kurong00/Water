@@ -92,7 +92,7 @@ public class Buoyancy : MonoBehaviour
         {
             Gizmos.DrawCube(transform.TransformPoint(p), new Vector3(gizmoSize, gizmoSize, gizmoSize));
         }
-        Gizmos.color = Color.cyan;
+        Gizmos.color = Color.red;
         foreach (var force in forces)
         {
             Gizmos.DrawCube(force[0], new Vector3(gizmoSize, gizmoSize, gizmoSize));
