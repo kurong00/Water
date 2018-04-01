@@ -41,7 +41,7 @@ Material:
     m_Floats:
     - _ColorStrength: 0.65
     - _Distortion: 8
-    - _WetStrength: 1
+    - _WetStrength: 0.83
     m_Colors:
     - _CausticColor: {r: 0.4705882, g: 0.4705882, b: 0.4705882, a: 1}
     - _CausticDirection: {r: -2, g: 5, b: 0, a: -4}

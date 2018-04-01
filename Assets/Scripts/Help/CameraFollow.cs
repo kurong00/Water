@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour {
 
-    public Transform target;
+    public GameObject target;
     public int speed;
     Vector3 offset;
 	void Start () {
@@ -12,8 +12,8 @@ public class CameraFollow : MonoBehaviour {
 	}
 	
 
-	void Update () {
-        Vector3 cameraPos = target.position + offset;
+	void FixedUpdate () {
+        Vector3 cameraPos = target.transform.position + offset;
         transform.position = Vector3.Lerp(transform.position, cameraPos, Time.deltaTime * speed);
 
 	}
