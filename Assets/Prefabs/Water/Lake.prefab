@@ -12,12 +12,10 @@ GameObject:
   - component: {fileID: 2340630}
   - component: {fileID: 6568056}
   - component: {fileID: 5450062}
-  - component: {fileID: 11423282}
-  - component: {fileID: 11419690}
-  - component: {fileID: 11438844}
-  - component: {fileID: 11491684}
-  - component: {fileID: 11497608}
-  - component: {fileID: 11490508}
+  - component: {fileID: 114607282431826228}
+  - component: {fileID: 114923321095375970}
+  - component: {fileID: 114664615658120576}
+  - component: {fileID: 114061265065854110}
   m_Layer: 4
   m_Name: Water
   m_TagString: Untagged
@@ -326,61 +324,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 2, z: 1}
   m_Center: {x: 0, y: -0.93, z: 0}
---- !u!114 &11419690
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 102406}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f64192f69721a5c4183d5a22c53d08df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  UpdateFPS: 60
-  Multithreading: 1
-  DisplacementResolution: 128
-  Damping: 0.005
-  Speed: 0.5
-  UseSmoothWaves: 0
-  UseProjectedWaves: 1
-  CutOutTexture: {fileID: 2800000, guid: 367916ea6c6dcc9429b55828b1cc3135, type: 3}
---- !u!114 &11423282
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 102406}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77874855b9bb0ff4a9cb1bfad39563f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CurrenCamera: {fileID: 0}
---- !u!114 &11438844
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 102406}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85f62959d57aaa64886ff4aabbddc3d6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ClipPlaneOffset: 0.07
-  CullingMask:
-    serializedVersion: 2
-    m_Bits: 4294967279
-  HDR: 0
-  OcclusionCulling: 1
-  TextureScale: 1
-  RenderTextureFormat: 0
-  FilterMode: 0
-  RenderingPath: 0
-  UseRealtimeUpdate: 1
-  FPSWhenMoveCamera: 40
-  FPSWhenStaticCamera: 20
 --- !u!114 &11489470
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -397,50 +340,6 @@ MonoBehaviour:
   ProjectiveTranforms:
   - {fileID: 469938}
   UpdateOnStart: 1
-  CanUpdate: 1
---- !u!114 &11490508
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 102406}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17a74b7e29bdf994a95a65299c457ced, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  FogColor: {r: 0.43529412, g: 0.6745098, b: 0.78039217, a: 1}
-  FogDensity: 0.15
-  UseSunShafts: 1
-  SunShuftsIntensity: 0.3
-  SunShuftsScreenBlendMode: 1
---- !u!114 &11491684
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 102406}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65972d769d3db0a4bbb2ea5da0d533b2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &11497608
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 102406}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3210dce5a79129d4f80b45defa1d8c8f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GlobalMatrixNames:
-  - _projectiveMatrWaves
-  ProjectiveTranforms:
-  - {fileID: 438374}
-  UpdateOnStart: 0
   CanUpdate: 1
 --- !u!119 &11904924
 Projector:
@@ -474,7 +373,7 @@ Projector:
   m_AspectRatio: 1
   m_Orthographic: 1
   m_OrthographicSize: 10
-  m_Material: {fileID: 2100000, guid: 260b5d8df0a91ca419c3c82d26bf3f40, type: 2}
+  m_Material: {fileID: 0}
   m_IgnoreLayers:
     serializedVersion: 2
     m_Bits: 16
@@ -489,3 +388,75 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 187654}
   m_IsPrefabParent: 1
+--- !u!114 &114061265065854110
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 102406}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54d79fc12f40ef340b69dc25ef603135, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+--- !u!114 &114607282431826228
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 102406}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 997fb2ccf9ba5fb4bb43b6e9820bb7f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ClipPlaneOffset: 0.07
+  CullingMask:
+    serializedVersion: 2
+    m_Bits: 1
+  HDR: 0
+  OcclusionCulling: 1
+  RenderingPath: 0
+  TextureScale: 1
+  RenderTextureFormat: 0
+  FilterMode: 0
+  UseRealtimeUpdate: 0
+  FPSWhenMoveCamera: 40
+  FPSWhenStaticCamera: 20
+--- !u!114 &114664615658120576
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 102406}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27c492e59bcb0e04cb972f09886740eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  updateFPS: 60
+  useMultipleThread: 0
+  resolutionTexture: 128
+  damping: 0
+  spreadSpeed: 0.5
+  useSmoothWaves: 0
+  useProjectedWaves: 1
+  cutOutTexture: {fileID: 0}
+--- !u!114 &114923321095375970
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 102406}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a909a5616b9f5b48b66f64a517ffb9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalMatrixNames:
+  - _projectiveMatrWaves
+  ProjectiveTranforms:
+  - {fileID: 438374}
+  UpdateOnStart: 0
+  CanUpdate: 1

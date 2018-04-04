@@ -12,7 +12,7 @@ Material:
   m_LightmapFlags: 5
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 3001
   stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
@@ -51,26 +51,26 @@ Material:
     - _Power: 6
     - _R0: 1.5
     - _ReflectionBrightness: 0
-    - _Scale: 3.47
+    - _Scale: 3.21
     - _TexturesScale: 20
-    - _TransperentDepth: 0
+    - _TransperentDepth: 0.5
     - _WaveScale: 1
     m_Colors:
-    - _Amplitude: {r: 0.04, g: 0.08, b: 0.04, a: 0.04}
-    - _Color: {r: 0.3486159, g: 0.7893411, b: 0.9117647, a: 1}
+    - _Amplitude: {r: 0.004, g: 0.008, b: 0.004, a: 0.004}
+    - _Color: {r: 0.52156866, g: 0.5921569, b: 0.6117647, a: 1}
     - _Direction: {r: 0.05, g: 0.3, b: 15, a: -3}
-    - _DirectionAB: {r: 0.3, g: 0.5, b: 0.85, a: 0.25}
+    - _DirectionAB: {r: 0.4, g: -0.2, b: 0.3, a: 0.25}
     - _DirectionCD: {r: 0.1, g: 0.9, b: 0.5, a: 0.5}
-    - _FadeColor: {r: 0.30147058, g: 0.30147058, b: 0.30147058, a: 1}
+    - _FadeColor: {r: 0.18382353, g: 0.17976859, b: 0.17976859, a: 1}
     - _FoamDirection: {r: 0, g: 5, b: -1, a: -1}
-    - _Frequency: {r: 0.6, g: 0.5, b: 0.5, a: 1.8}
+    - _Frequency: {r: 5, g: -1.5, b: 2, a: 3}
     - _GAmplitude: {r: 0.05, g: 0.05, b: 0.02, a: 0.03}
     - _GDirectionAB: {r: 0.4, g: -0.2, b: 0.3, a: 0.25}
     - _GDirectionCD: {r: 0.1, g: 2, b: 0.3, a: 0.5}
     - _GFrequency: {r: 5, g: -7, b: 2, a: 3}
     - _GSpeed: {r: 1, g: 1.5, b: 2, a: -2}
     - _GSteepness: {r: 0.5, g: 0.05, b: 0.05, a: 0.62}
-    - _GlareColor: {r: 0.13867864, g: 0.41911763, b: 0.41911763, a: 1}
+    - _GlareColor: {r: 0.03137255, g: 0.03529412, b: 0.03529412, a: 1}
     - _ReflectionColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Speed: {r: -0.23, g: -1.25, b: -3, a: 1.5}
+    - _Speed: {r: 0.5, g: 0.05, b: 0.005, a: 0.62}
     - _Steepness: {r: -2.2, g: 2, b: 1.5, a: 1}

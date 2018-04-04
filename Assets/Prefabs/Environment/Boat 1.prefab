@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &177972
 GameObject:
   m_ObjectHideFlags: 0
@@ -30,7 +30,7 @@ GameObject:
   - component: {fileID: 6477974}
   - component: {fileID: 5477974}
   - component: {fileID: 114447628883203290}
-  - component: {fileID: 11477972}
+  - component: {fileID: 114344004412847058}
   m_Layer: 4
   m_Name: Boat 1
   m_TagString: Untagged
@@ -54,7 +54,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &477970
 Transform:
   m_ObjectHideFlags: 1
@@ -62,7 +62,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 177970}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.2, y: 0.2, z: 0.75}
+  m_LocalPosition: {x: -1.2, y: 0.2, z: 0.629}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 477972}
@@ -90,7 +90,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 177974}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.16, y: 0.26, z: -0.53}
+  m_LocalPosition: {x: -1.1600004, y: 0.26000008, z: -0.65100026}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 477972}
@@ -166,17 +166,6 @@ MeshCollider:
   m_CookingOptions: 14
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300000, guid: 129ddc4263912ff47908ec32d3a5c79e, type: 3}
---- !u!114 &11477972
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 177972}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d847570c4e74214eba4a998dbbaae50, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!135 &13577972
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -187,7 +176,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.8
+  m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!135 &13577974
 SphereCollider:
@@ -199,7 +188,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.8
+  m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &100100000
 Prefab:
@@ -223,15 +212,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a36453e121acaab43996e5e65b7ff4b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsReversedRipple: 0
-  RippleStrenght: 0.1
-  MaxVelocity: 1.5
-  RandomRipplesInterval: 0
+  randomRippleIntervalTime: 0
+  maxSpeed: 1.5
   reversedRippleDelay: 0.2
-  SplashEffect: {fileID: 129212, guid: bd3bf0ad7039cae4e92bd458f39aa86f, type: 2}
-  SplashEffectMoved: {fileID: 138562, guid: b10c4612fa59ff74891d70da2af48027, type: 2}
-  SplashAudioSource: {fileID: 0}
   splashSizeMultiplier: 2
+  splashEffect: {fileID: 129212, guid: bd3bf0ad7039cae4e92bd458f39aa86f, type: 2}
+  splashEffectMoved: {fileID: 138562, guid: b10c4612fa59ff74891d70da2af48027, type: 2}
+  isReversedRipple: 0
+  splashAudioSource: {fileID: 0}
+  rippleStrength: 0.1
 --- !u!114 &114268084880208128
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -243,15 +232,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a36453e121acaab43996e5e65b7ff4b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsReversedRipple: 0
-  RippleStrenght: 0.1
-  MaxVelocity: 1.5
-  RandomRipplesInterval: 0
+  randomRippleIntervalTime: 0
+  maxSpeed: 1.5
   reversedRippleDelay: 0.2
-  SplashEffect: {fileID: 129212, guid: bd3bf0ad7039cae4e92bd458f39aa86f, type: 2}
-  SplashEffectMoved: {fileID: 138562, guid: b10c4612fa59ff74891d70da2af48027, type: 2}
-  SplashAudioSource: {fileID: 0}
   splashSizeMultiplier: 2
+  splashEffect: {fileID: 129212, guid: bd3bf0ad7039cae4e92bd458f39aa86f, type: 2}
+  splashEffectMoved: {fileID: 138562, guid: b10c4612fa59ff74891d70da2af48027, type: 2}
+  isReversedRipple: 0
+  splashAudioSource: {fileID: 0}
+  rippleStrength: 0.1
+--- !u!114 &114344004412847058
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 177972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b24964338e790e499fe23bc0793a0d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 3
+  rotateSpeed: 8
 --- !u!114 &114447628883203290
 MonoBehaviour:
   m_ObjectHideFlags: 1
