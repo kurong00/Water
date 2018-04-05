@@ -1,38 +1,76 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ObjectMove : MonoBehaviour {
 
+    const float PRECISION = 0.000001f;
+    Rigidbody rigid;
+    bool up, left, down, right;
     public float moveSpeed = 5;
     public float rotateSpeed = 15;
+    bool useJoyStick;
+
+    private void Start()
+    {
+        rigid = GetComponent<Rigidbody>();
+        if (JoyStick.instance)
+            useJoyStick = true;
+    }
 
     void Update()
     {
-        Move();
+        if (useJoyStick)
+        {
+            Move();
+        }
+            if (Input.GetKeyDown(KeyCode.W))
+                up = true;
+            if (Input.GetKeyDown(KeyCode.A))
+                left = true;
+            if (Input.GetKeyDown(KeyCode.S))
+                down = true;
+            if (Input.GetKeyDown(KeyCode.D))
+                right = true;
+
+            if (Input.GetKeyUp(KeyCode.W))
+                up = false;
+            if (Input.GetKeyUp(KeyCode.A))
+                left = false;
+            if (Input.GetKeyUp(KeyCode.S))
+                down = false;
+            if (Input.GetKeyUp(KeyCode.D))
+                right = false;
+            if (up)
+            {
+                rigid.AddForce(transform.right * 500 * Time.deltaTime);
+            }
+            if (down)
+            {
+                rigid.AddForce(-transform.right * 500 * Time.deltaTime);
+            }
+            if (right)
+            {
+                rigid.AddTorque(transform.up * 200 * Time.deltaTime);
+            }
+            if (left)
+            {
+                rigid.AddTorque(-transform.up * 200 * Time.deltaTime);
+            }
+        
+        
     }
 
     void Move()
     {
-        if (Input.GetAxis("Horizontal") != 0)
+        if (Math.Abs(JoyStick.instance.Horizon) > PRECISION)
         {
-            if (Input.GetAxis("Horizontal") != 0)
-            {
-                transform.Rotate(Vector3.down * rotateSpeed * Input.GetAxis("Horizontal") * 2 * Time.deltaTime);
-            }
-            else if (JoyStick.instance != null && JoyStick.instance.Horizon != 0)
-                transform.Rotate(Vector3.down * rotateSpeed * Time.deltaTime / 2 *
-                JoyStick.instance.Horizon / JoyStick.instance.dragSpeed);
+            transform.Rotate(Vector3.up * rotateSpeed * Time.deltaTime / 2 *JoyStick.instance.Horizon / JoyStick.instance.dragSpeed);
         }
-        if (Input.GetAxis("Vertical") != 0)
+        if (Math.Abs(JoyStick.instance.Vertical) > PRECISION)
         {
-            if (Input.GetAxis("Vertical") != 0)
-            {
-                transform.Translate(Vector3.right * Input.GetAxis("Vertical") * moveSpeed * 2 * Time.deltaTime);
-            }
-            else if (JoyStick.instance != null && JoyStick.instance.Vertical != 0)
-                transform.Translate(Vector3.right * moveSpeed * Time.deltaTime / 2 *
-              JoyStick.instance.Vertical / JoyStick.instance.dragSpeed);
+            transform.Translate(Vector3.right * moveSpeed * Time.deltaTime / 2 *JoyStick.instance.Vertical / JoyStick.instance.dragSpeed);
         }
     }
 }

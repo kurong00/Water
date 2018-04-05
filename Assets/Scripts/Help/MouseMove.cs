@@ -14,7 +14,6 @@ public class MouseMove : MonoBehaviour {
     void Start() {
         if (GetComponent<Rigidbody>())
             GetComponent<Rigidbody>().freezeRotation = true;
-
     }
 
     void LateUpdate() {
