@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2361140}
   - component: {fileID: 11461140}
   m_Layer: 0
-  m_Name: Unity4TestCubeWithSplash
+  m_Name: volleyBall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46,7 +46,7 @@ MeshRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 20581d60a9722c94a94ce40f78aaf159, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -72,7 +72,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 161140}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!65 &6561140
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -96,15 +96,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a36453e121acaab43996e5e65b7ff4b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsReversedRipple: 0
-  RippleStrenght: 0.2
-  MaxVelocity: 2
-  RandomRipplesInterval: 0.5
+  randomRippleIntervalTime: 0
+  maxSpeed: 1.5
   reversedRippleDelay: 0.25
-  SplashEffect: {fileID: 129212, guid: bd3bf0ad7039cae4e92bd458f39aa86f, type: 2}
-  SplashEffectMoved: {fileID: 138562, guid: b10c4612fa59ff74891d70da2af48027, type: 2}
-  SplashAudioSource: {fileID: 0}
   splashSizeMultiplier: 2
+  splashEffect: {fileID: 0}
+  splashEffectMoved: {fileID: 0}
+  isReversedRipple: 0
+  splashAudioSource: {fileID: 0}
+  rippleStrength: 0.1
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
