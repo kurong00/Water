@@ -1120,6 +1120,26 @@ Prefab:
       propertyPath: splashSizeMultiplier
       value: 1.75
       objectReference: {fileID: 0}
+    - target: {fileID: 114344004412847058, guid: 746a18aa91b03c14f9560a0140037577,
+        type: 2}
+      propertyPath: moveSpeed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114344004412847058, guid: 746a18aa91b03c14f9560a0140037577,
+        type: 2}
+      propertyPath: rotateSpeed
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 114190019169900596, guid: 746a18aa91b03c14f9560a0140037577,
+        type: 2}
+      propertyPath: splashEffectMoved
+      value: 
+      objectReference: {fileID: 138562, guid: b10c4612fa59ff74891d70da2af48027, type: 2}
+    - target: {fileID: 114268084880208128, guid: 746a18aa91b03c14f9560a0140037577,
+        type: 2}
+      propertyPath: splashEffectMoved
+      value: 
+      objectReference: {fileID: 138562, guid: b10c4612fa59ff74891d70da2af48027, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 746a18aa91b03c14f9560a0140037577, type: 2}
   m_IsPrefabParent: 0
