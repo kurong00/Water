@@ -134,7 +134,7 @@ public class ColorPicker : MonoBehaviour {
 
             GUI.DrawTexture(rectColorSpace, colorSpace);
         }
-        if (mState == ESTATE.Showed)
+        if(mState == ESTATE.Showed)
 		{
 			txtR = GUI.TextField(new Rect(startPos.x + sizeCurrent + 10, startPos.y + 30, 40, 20), txtR, 3);
 			txtG = GUI.TextField(new Rect(startPos.x + sizeCurrent + 10, startPos.y + 60, 40, 20), txtG, 3);
@@ -177,8 +177,6 @@ public class ColorPicker : MonoBehaviour {
 			}
 			dt += Time.deltaTime;
 		}
-
-        
 
 		float alphaGradHeight = alphaGradientHeight * (sizeCurrent/sizeFull);
 		Vector2 startPosAlpha = startPos + new Vector2(0, sizeCurrent);
@@ -298,4 +296,12 @@ public class ColorPicker : MonoBehaviour {
 			receiver.SendMessage(colorSetFunctionName, SelectedColor, SendMessageOptions.DontRequireReceiver);
 		}
 	}
+
+    public void NotifyColor(Color color)
+    {
+        SetColor(color);
+        SelectedColor = color;
+        UpdateColorEditFields(false);
+        UpdateColorSliders(false);
+    }
 }
