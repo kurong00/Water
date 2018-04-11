@@ -94,7 +94,7 @@ public class GUIEditor : MonoBehaviour {
                 caustic.SetActive(false);
         }
 
-        if (GUI.Button(new Rect(10, 190, 150, 40), "On/Off caustic"))
+        if (GUI.Button(new Rect(10, 190, 150, 40), "On/Off Caustic"))
         {
             caustic.SetActive(!caustic.activeSelf);
         }
@@ -120,7 +120,6 @@ public class GUIEditor : MonoBehaviour {
         waterWaveScaleXZ = GUI.HorizontalSlider(new Rect(10, 162, 120, 15), waterWaveScaleXZ, 0.3f, 3);
         GUI.Label(new Rect(140, 160, 30, 30), "Scale", labelTexColor);
 
-        //projectorScale.transform.localScale = new Vector3(waterWaveScaleXZ * oldProjectorScale.x, waterWaveScaleXZ * oldProjectorScale.y, waterWaveScaleXZ * oldProjectorScale.z);
         currentWaterMaterial.SetFloat("_WaveScale", oldWaveScale * waterWaveScaleXZ);
         currentWaterMaterial.SetFloat("_TexturesScale", oldTextureScale * waterWaveScaleXZ);
 
@@ -133,10 +132,7 @@ public class GUIEditor : MonoBehaviour {
 
         if (GUI.Button(new Rect(10, 35, 150, 40), "Change Scene "))
         {
-            if (SceneManager.GetActiveScene() == SceneManager.GetSceneAt(SceneManager.sceneCount - 1))
-                SceneManager.LoadScene(0);
-            else
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            SceneManager.LoadScene((1 + SceneManager.sceneCount) % SceneManager.sceneCountInBuildSettings);
             UpdateCurrentWater();
         }
 
@@ -184,7 +180,6 @@ public class GUIEditor : MonoBehaviour {
         GUI.Label(new Rect(140, 220, 30, 30), "Direction", labelTexColor);
         currentWaterMaterial.SetVector("_Direction", waterDirection * direction);
         currentWaterMaterial.SetVector("_FoamDirection", foamDirection * direction);
-        //causticMaterial.SetVector("_CausticDirection", causticDirection * direction);
         currentWaterMaterial.SetVector("_DirectionAB", ABDirection * direction);
         currentWaterMaterial.SetVector("_DirectionCD", CDDirection * direction);
     } 

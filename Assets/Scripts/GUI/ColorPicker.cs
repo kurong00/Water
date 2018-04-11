@@ -108,164 +108,158 @@ public class ColorPicker : MonoBehaviour {
 
 	public void DrawGUI () 
 	{
-        Rect rectColorSpace = new Rect(startPos.x, startPos.y, sizeCurrent, sizeCurrent);
-        Rect rectColorEdit = new Rect(startPos.x + sizeCurrent + 20, startPos.y + 40, 50, 200);
+        if (titleStyle == null)
+        {
+            titleStyle = new GUIStyle(GUI.skin.label);
+            titleStyle.normal.textColor = textColor;
+        }
+
+        Rect rectColorEdit = new Rect(startPos.x + sizeCurrent + 10, startPos.y + 30, 40, 140);
         Rect rectColorSlider = new Rect(startPos.x + sizeCurrent + 50, startPos.y + 30, 60, 140);
-        if (titleStyle == null) {
-			titleStyle = new GUIStyle (GUI.skin.label);
-            //titleStyle.padding = new RectOffset(30, 30, 10, 10);
-			titleStyle.normal.textColor = textColor;
-            titleStyle.fontSize = 25;
-		}
-        if (textureStyle == null)
+
+        GUI.Label(new Rect(startPos.x + sizeCurrent + 60, startPos.y, 200, 30), Title, titleStyle);
+
+        GUI.DrawTexture(new Rect(startPos.x + sizeCurrent + 10, startPos.y, 40, 20), txColorDisplay);
+
+        if (mState == ESTATE.Showed)
         {
-            textureStyle = new GUIStyle(GUI.skin.box);
-            textureStyle.padding = new RectOffset(30, 30, 10, 10);
+            txtR = GUI.TextField(new Rect(startPos.x + sizeCurrent + 10, startPos.y + 30, 40, 20), txtR, 3);
+            txtG = GUI.TextField(new Rect(startPos.x + sizeCurrent + 10, startPos.y + 60, 40, 20), txtG, 3);
+            txtB = GUI.TextField(new Rect(startPos.x + sizeCurrent + 10, startPos.y + 90, 40, 20), txtB, 3);
+            txtA = GUI.TextField(new Rect(startPos.x + sizeCurrent + 10, startPos.y + 120, 40, 20), txtA, 3);
+            valR = GUI.HorizontalSlider(new Rect(startPos.x + sizeCurrent + 50, startPos.y + 35, 60, 20), valR, 0.0f, 1.0f);
+            valG = GUI.HorizontalSlider(new Rect(startPos.x + sizeCurrent + 50, startPos.y + 65, 60, 20), valG, 0.0f, 1.0f);
+            valB = GUI.HorizontalSlider(new Rect(startPos.x + sizeCurrent + 50, startPos.y + 95, 60, 20), valB, 0.0f, 1.0f);
+            valA = GUI.HorizontalSlider(new Rect(startPos.x + sizeCurrent + 50, startPos.y + 125, 60, 20), valA, 0.0f, 1.0f);
+            if (GUI.Button(new Rect(startPos.x + sizeCurrent + 10, startPos.y + 150, 60, 20), "Apply"))
+            {
+                ApplyColor();
+                SelectedColor = TempColor;
+                if (receiver)
+                {
+                    receiver.SendMessage(colorSetFunctionName, SelectedColor, SendMessageOptions.DontRequireReceiver);
+                }
+            }
+
+            GUIStyle labelStyleRGBA = new GUIStyle(GUI.skin.label);
+            labelStyleRGBA.normal.textColor = Color.white;
+            GUI.Label(new Rect(startPos.x + sizeCurrent + 110, startPos.y + 30, 20, 20), "R", labelStyleRGBA);
+            GUI.Label(new Rect(startPos.x + sizeCurrent + 110, startPos.y + 60, 20, 20), "G", labelStyleRGBA);
+            GUI.Label(new Rect(startPos.x + sizeCurrent + 110, startPos.y + 90, 20, 20), "B", labelStyleRGBA);
+            GUI.Label(new Rect(startPos.x + sizeCurrent + 110, startPos.y + 120, 20, 20), "A", labelStyleRGBA);
         }
-        GUILayout.BeginHorizontal();
+
+        //update scaling states
+        if (mState == ESTATE.Showing)
         {
-            //颜色的作用域
-            GUI.Label(new Rect(startPos.x + sizeCurrent, startPos.y, 200, 30), Title, titleStyle);
-
-            //选中的颜色
-            GUI.DrawTexture(new Rect(startPos.x + sizeCurrent, startPos.y, 40, 20), txColorDisplay);
-
-            //选择颜色（色谱）
-
-            GUI.DrawTexture(rectColorSpace, colorSpace);
+            sizeCurrent = Mathf.Lerp(sizeHidden, sizeFull, dt / animTime);
+            if (dt / animTime > 1.0f)
+            {
+                mState = ESTATE.Showed;
+            }
+            dt += Time.deltaTime;
         }
-        if(mState == ESTATE.Showed)
-		{
-			txtR = GUI.TextField(new Rect(startPos.x + sizeCurrent + 10, startPos.y + 30, 40, 20), txtR, 3);
-			txtG = GUI.TextField(new Rect(startPos.x + sizeCurrent + 10, startPos.y + 60, 40, 20), txtG, 3);
-			txtB = GUI.TextField(new Rect(startPos.x + sizeCurrent + 10, startPos.y + 90, 40, 20), txtB, 3);
-			txtA = GUI.TextField(new Rect(startPos.x + sizeCurrent + 10, startPos.y + 120, 40, 20), txtA, 3);
-			valR = GUI.HorizontalSlider(new Rect(startPos.x + sizeCurrent + 50, startPos.y + 35, 60, 20), valR, 0.0f, 1.0f);
-			valG = GUI.HorizontalSlider(new Rect(startPos.x + sizeCurrent + 50, startPos.y + 65, 60, 20), valG, 0.0f, 1.0f);
-			valB = GUI.HorizontalSlider(new Rect(startPos.x + sizeCurrent + 50, startPos.y + 95, 60, 20), valB, 0.0f, 1.0f);
-			valA = GUI.HorizontalSlider(new Rect(startPos.x + sizeCurrent + 50, startPos.y + 125, 60, 20), valA, 0.0f, 1.0f);
-			if(GUI.Button(new Rect(startPos.x + sizeCurrent + 10, startPos.y + 150, 60, 20), "Apply"))
-			{
-				ApplyColor();
-				SelectedColor = TempColor;
-				if(receiver)
-				{
-					receiver.SendMessage(colorSetFunctionName, SelectedColor, SendMessageOptions.DontRequireReceiver);
-				}
-			}
+        if (mState == ESTATE.Hidding)
+        {
+            sizeCurrent = Mathf.Lerp(sizeFull, sizeHidden, dt / animTime);
+            if (dt / animTime > 1.0f)
+            {
+                mState = ESTATE.Hidden;
+            }
+            dt += Time.deltaTime;
+        }
+        //draw color picker
+        Rect rect = new Rect(startPos.x, startPos.y, sizeCurrent, sizeCurrent);
+        GUI.DrawTexture(rect, colorSpace);
 
-			GUIStyle labelStyleRGBA = new GUIStyle(GUI.skin.label);
-			labelStyleRGBA.normal.textColor = Color.white;
-			GUI.Label(new Rect(startPos.x + sizeCurrent + 110, startPos.y + 30, 20, 20), "R", labelStyleRGBA);
-			GUI.Label(new Rect(startPos.x + sizeCurrent + 110, startPos.y + 60, 20, 20), "G", labelStyleRGBA);
-			GUI.Label(new Rect(startPos.x + sizeCurrent + 110, startPos.y + 90, 20, 20), "B", labelStyleRGBA);
-			GUI.Label(new Rect(startPos.x + sizeCurrent + 110, startPos.y + 120, 20, 20), "A", labelStyleRGBA);
-		}
-		if(mState == ESTATE.Showing)
-		{
-			sizeCurrent = Mathf.Lerp(sizeHidden, sizeFull, dt/animTime);
-			if(dt/animTime > 1.0f) {
-				mState = ESTATE.Showed;
-			}
-			dt += Time.deltaTime;
-		}
-		if(mState == ESTATE.Hidding)
-		{
-			sizeCurrent = Mathf.Lerp(sizeFull, sizeHidden, dt/animTime);
-			if(dt/animTime > 1.0f) {
-				mState = ESTATE.Hidden;
-			}
-			dt += Time.deltaTime;
-		}
+        float alphaGradHeight = alphaGradientHeight * (sizeCurrent / sizeFull);
+        Vector2 startPosAlpha = startPos + new Vector2(0, sizeCurrent);
+        Rect rectAlpha = new Rect(startPosAlpha.x, startPosAlpha.y, sizeCurrent, alphaGradHeight);
+        GUI.DrawTexture(rectAlpha, alphaGradient);
 
-		float alphaGradHeight = alphaGradientHeight * (sizeCurrent/sizeFull);
-		Vector2 startPosAlpha = startPos + new Vector2(0, sizeCurrent);
-		Rect rectAlpha = new Rect(startPosAlpha.x, startPosAlpha.y, sizeCurrent, alphaGradHeight);
-		GUI.DrawTexture(rectAlpha, alphaGradient);
+        Rect rectFullSize = new Rect(startPos.x, startPos.y, sizeCurrent, sizeCurrent + alphaGradHeight);
 
-		Rect rectFullSize = new Rect(startPos.x, startPos.y, sizeCurrent, sizeCurrent + alphaGradHeight);
+        Vector2 mousePos = Event.current.mousePosition;
+        Event e = Event.current;
+        bool isLeftMBtnClicked = e.type == EventType.MouseUp;
+        bool isLeftMBtnDragging = e.type == EventType.MouseDrag;
+        bool openCondition = (rectFullSize.Contains(e.mousePosition) && (((e.type == EventType.MouseUp || e.type == EventType.MouseDrag || e.type == EventType.MouseMove) && e.isMouse)));
+        bool closeCondition = isLeftMBtnClicked || (!rectFullSize.Contains(e.mousePosition)) && (e.isMouse && (e.type == EventType.MouseMove || e.type == EventType.MouseDown));
+        if (openCondition && (activeColorPicker == null || activeColorPicker.mState == ESTATE.Hidden))
+        {
+            if (mState == ESTATE.Hidden)
+            {
+                mState = ESTATE.Showing;
+                activeColorPicker = this;
+                dt = 0;
+            }
+        }
+        if (closeCondition)
+        {
+            if (mState == ESTATE.Showed)
+            {
+                if (isLeftMBtnClicked)
+                {
+                    ApplyColor();
+                }
+                else
+                {
+                    SetColor(SelectedColor);
+                }
 
-		Vector2 mousePos = Event.current.mousePosition;
-		Event e = Event.current;
-		bool isLeftMBtnClicked = e.type == EventType.MouseUp;
-		bool isLeftMBtnDragging = e.type == EventType.MouseDrag;
-		bool openCondition = (rectFullSize.Contains(e.mousePosition) && (((e.type == EventType.MouseUp || e.type == EventType.MouseDrag || e.type == EventType.MouseMove) && e.isMouse)));
-		bool closeCondition = isLeftMBtnClicked || (!rectFullSize.Contains(e.mousePosition)) && (e.isMouse && (e.type == EventType.MouseMove || e.type == EventType.MouseDown));
-		if(openCondition && (activeColorPicker == null || activeColorPicker.mState == ESTATE.Hidden))
-		{
-			if(mState == ESTATE.Hidden)
-			{
-				mState = ESTATE.Showing;
-				activeColorPicker = this;
-				dt = 0;
-			}
-		}
-		if(closeCondition)
-		{
-			if(mState == ESTATE.Showed)
-			{
-				if(isLeftMBtnClicked)
-				{
-					ApplyColor();
-				}
-				else
-				{
-					SetColor(SelectedColor);
-				}
+                mState = ESTATE.Hidding;
+                dt = 0;
+            }
+        }
+        if (mState == ESTATE.Showed)
+        {
+            if (rect.Contains(e.mousePosition))
+            {
+                float coeffX = colorSpace.width / sizeCurrent;
+                float coeffY = colorSpace.height / sizeCurrent;
+                Vector2 localImagePos = (mousePos - startPos);
+                Color res = colorSpace.GetPixel((int)(coeffX * localImagePos.x), colorSpace.height - (int)(coeffY * localImagePos.y) - 1);
+                SetColor(res);
+                if (isLeftMBtnDragging)
+                {
+                    ApplyColor();
+                }
+                UpdateColorEditFields(false);
+                UpdateColorSliders(false);
+            }
+            else if (rectAlpha.Contains(e.mousePosition))
+            {
+                float coeffX = alphaGradient.width / sizeCurrent;
+                float coeffY = alphaGradient.height / sizeCurrent;
+                Vector2 localImagePos = (mousePos - startPosAlpha);
+                Color res = alphaGradient.GetPixel((int)(coeffX * localImagePos.x), colorSpace.height - (int)(coeffY * localImagePos.y) - 1);
+                Color curr = GetColor();
+                curr.a = res.r;
+                SetColor(curr);
+                if (isLeftMBtnDragging)
+                {
+                    ApplyColor();
+                }
+                UpdateColorEditFields(false);
+                UpdateColorSliders(false);
+            }
+            else if (rectColorEdit.Contains(e.mousePosition))
+            {
+                UpdateColorEditFields(true);
+                UpdateColorSliders(false);
+            }
+            else if (rectColorSlider.Contains(e.mousePosition))
+            {
+                UpdateColorEditFields(false);
+                UpdateColorSliders(true);
+            }
+            else
+            {
+                SetColor(SelectedColor);
 
-				mState = ESTATE.Hidding;
-				dt = 0;
-			}
-		}
-		if(mState == ESTATE.Showed)
-		{
-			if(rectColorSpace.Contains(e.mousePosition))
-			{
-				float coeffX = colorSpace.width / sizeCurrent;
-				float coeffY = colorSpace.height / sizeCurrent;
-				Vector2 localImagePos = (mousePos - startPos);
-				Color res = colorSpace.GetPixel((int)(coeffX * localImagePos.x), colorSpace.height - (int)(coeffY * localImagePos.y)-1);
-				SetColor(res);
-				if(isLeftMBtnDragging )
-				{
-					ApplyColor();
-				}
-				UpdateColorEditFields(false);
-				UpdateColorSliders(false);
-			}
-			else if(rectAlpha.Contains(e.mousePosition))
-			{
-				float coeffX = alphaGradient.width / sizeCurrent;
-				float coeffY = alphaGradient.height / sizeCurrent;
-				Vector2 localImagePos = (mousePos - startPosAlpha);
-				Color res = alphaGradient.GetPixel((int)(coeffX * localImagePos.x), colorSpace.height - (int)(coeffY * localImagePos.y)-1);
-				Color curr = GetColor();
-				curr.a = res.r;
-				SetColor(curr);
-				if(isLeftMBtnDragging)
-				{
-					ApplyColor();
-				}
-				UpdateColorEditFields(false);
-				UpdateColorSliders(false);
-			}
-			else if(rectColorEdit.Contains(e.mousePosition))
-			{
-				UpdateColorEditFields(true);
-				UpdateColorSliders(false);
-			}
-			else if(rectColorSlider.Contains(e.mousePosition))
-			{
-				UpdateColorEditFields(false);
-				UpdateColorSliders(true);
-			}
-			else
-			{
-				SetColor(SelectedColor);
-
-			}
-		}
-	}
+            }
+        }
+    }
 
 	public void SetColor(Color color)
 	{
