@@ -35,7 +35,6 @@ public class ColorPicker : MonoBehaviour {
 	float alphaGradientHeight = 16;
 
 	GUIStyle titleStyle = null;
-    GUIStyle textureStyle = null;
     Color textColor = Color.white;
 	Texture2D txColorDisplay;
 
