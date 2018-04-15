@@ -2484,7 +2484,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -200.5, y: 171.2}
+  m_AnchoredPosition: {x: -303.9, y: 231.6}
   m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &846768623
@@ -2582,7 +2582,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -102.3, y: 103}
+  m_AnchoredPosition: {x: -99.5, y: 102.8}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &873680346
@@ -5056,6 +5056,27 @@ SkinnedMeshRenderer:
     m_Center: {x: -1.3593104, y: 0.14488542, z: -0.010004401}
     m_Extent: {x: 1.4868414, y: 0.9276935, z: 1.0825883}
   m_DirtyAABB: 0
+--- !u!1 &1641453464 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1310009229114460, guid: 9b0b9daf9b2f85147b1db8c367064cac,
+    type: 2}
+  m_PrefabInternal: {fileID: 1230342932}
+--- !u!114 &1641453473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1641453464}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e1bdfd353b351246a35e99ee69bda26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FogColor: {r: 0.34117648, g: 0.74509805, b: 0.85882354, a: 1}
+  FogDensity: 0.05
+  UseSunShafts: 1
+  SunShuftsIntensity: 1.5
+  SunShuftsScreenBlendMode: 0
 --- !u!1 &1661333293
 GameObject:
   m_ObjectHideFlags: 0

@@ -50,11 +50,11 @@ Material:
     - _OffsetFresnel: 0.3
     - _Power: 1.5
     - _R0: 0.9
-    - _ReflectionBrightness: 0.31
+    - _ReflectionBrightness: 0.838
     - _RipplesScale: 20
     - _Scale: 1
     - _TexturesScale: 5.13
-    - _TransperentDepth: 0
+    - _TransperentDepth: 0.074
     - _WaveScale: 1
     m_Colors:
     - _Amplitude: {r: 0.07, g: 0.08, b: 0.04, a: 0.06}
@@ -62,7 +62,7 @@ Material:
     - _Direction: {r: 0.05, g: 0.3, b: 15, a: -3}
     - _DirectionAB: {r: 0.4, g: -0.2, b: 0.3, a: 0.25}
     - _DirectionCD: {r: 0.1, g: 0.9, b: 0.5, a: 0.5}
-    - _FadeColor: {r: 0.37905493, g: 0.7767551, b: 0.9044118, a: 1}
+    - _FadeColor: {r: 0.2926038, g: 0.8058444, b: 0.9705882, a: 1}
     - _FoamDirection: {r: 0, g: 5, b: -1, a: -1}
     - _Frequency: {r: 5, g: -3, b: 1, a: 0.8}
     - _GAmplitude: {r: 0.07, g: 0.08, b: 0.04, a: 0.06}
