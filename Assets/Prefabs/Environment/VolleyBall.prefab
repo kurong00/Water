@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2361140}
   - component: {fileID: 11461140}
   m_Layer: 0
-  m_Name: Unity4TestCubeWithSplash
+  m_Name: VolleyBall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -96,15 +96,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a36453e121acaab43996e5e65b7ff4b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  randomRippleIntervalTime: 0
+  isReversedRipple: 0
+  rippleStrenght: 0.1
   maxSpeed: 1.5
+  randomRipplesInterval: 0
   reversedRippleDelay: 0.25
-  splashSizeMultiplier: 2
   splashEffect: {fileID: 0}
   splashEffectMoved: {fileID: 0}
-  isReversedRipple: 0
   splashAudioSource: {fileID: 0}
-  rippleStrength: 0.1
+  splashSizeMultiplier: 2
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

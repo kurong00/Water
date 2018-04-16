@@ -145,10 +145,6 @@ public class ColorPicker : MonoBehaviour {
             txtG = GUI.TextField(new Rect(startPos.x + sizeCurrent + 10, startPos.y + textPadding * 2, buttonWide,buttonHigh), txtG, 3, textStyle);
             txtB = GUI.TextField(new Rect(startPos.x + sizeCurrent + 10, startPos.y + textPadding * 3, buttonWide,buttonHigh), txtB, 3, textStyle);
             txtA = GUI.TextField(new Rect(startPos.x + sizeCurrent + 10, startPos.y + textPadding * 4, buttonWide,buttonHigh), txtA, 3, textStyle);
-            valR = GUI.HorizontalSlider(new Rect(startPos.x + sizeCurrent + 80, startPos.y + textPadding * 1+10, 60, 20), valR, 0.0f, 1.0f);
-            valG = GUI.HorizontalSlider(new Rect(startPos.x + sizeCurrent + 80, startPos.y + textPadding * 2+10, 60, 20), valG, 0.0f, 1.0f);
-            valB = GUI.HorizontalSlider(new Rect(startPos.x + sizeCurrent + 80, startPos.y + textPadding * 3+10, 60, 20), valB, 0.0f, 1.0f);
-            valA = GUI.HorizontalSlider(new Rect(startPos.x + sizeCurrent + 80, startPos.y + textPadding * 4+10, 60, 20), valA, 0.0f, 1.0f);
             if (GUI.Button(new Rect(startPos.x + sizeCurrent + 10, startPos.y + textPadding * 5, 100, 60), "Apply", buttonStyle))
             {
                 ApplyColor();
@@ -160,14 +156,14 @@ public class ColorPicker : MonoBehaviour {
             }
 
             GUIStyle labelStyleRGBA = new GUIStyle(GUI.skin.label);
+            labelStyleRGBA.fontSize = 25;
             labelStyleRGBA.normal.textColor = Color.white;
-            GUI.Label(new Rect(startPos.x + sizeCurrent + 110, startPos.y + 30, 20, 20), "R", labelStyleRGBA);
-            GUI.Label(new Rect(startPos.x + sizeCurrent + 110, startPos.y + 60, 20, 20), "G", labelStyleRGBA);
-            GUI.Label(new Rect(startPos.x + sizeCurrent + 110, startPos.y + 90, 20, 20), "B", labelStyleRGBA);
-            GUI.Label(new Rect(startPos.x + sizeCurrent + 110, startPos.y + 120, 20, 20), "A", labelStyleRGBA);
+            GUI.Label(new Rect(startPos.x + sizeCurrent + 100, startPos.y + textPadding * 1, 80, 80), "R", labelStyleRGBA);
+            GUI.Label(new Rect(startPos.x + sizeCurrent + 100, startPos.y + textPadding * 2, 80, 80), "G", labelStyleRGBA);
+            GUI.Label(new Rect(startPos.x + sizeCurrent + 100, startPos.y + textPadding * 3, 80, 80), "B", labelStyleRGBA);
+            GUI.Label(new Rect(startPos.x + sizeCurrent + 100, startPos.y + textPadding * 4, 80, 80), "A", labelStyleRGBA);
         }
 
-        //update scaling states
         if (mState == ESTATE.Showing)
         {
             sizeCurrent = Mathf.Lerp(sizeHidden, sizeFull, dt / animTime);
@@ -186,7 +182,7 @@ public class ColorPicker : MonoBehaviour {
             }
             dt += Time.deltaTime;
         }
-        //draw color picker
+
         Rect rect = new Rect(startPos.x, startPos.y, sizeCurrent, sizeCurrent);
         GUI.DrawTexture(rect, colorSpace);
 

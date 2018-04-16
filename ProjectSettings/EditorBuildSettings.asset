@@ -8,3 +8,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Sea.unity
     guid: ca4f2376cc4131c46b3dbaa2e7e2e726
+  - enabled: 1
+    path: Assets/Scenes/Pool.unity
+    guid: 1c7be864c506ad44cb94e8b3cfd4f46d

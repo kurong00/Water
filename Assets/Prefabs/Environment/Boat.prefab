@@ -32,7 +32,7 @@ GameObject:
   - component: {fileID: 114447628883203290}
   - component: {fileID: 114344004412847058}
   m_Layer: 4
-  m_Name: Boat 1
+  m_Name: Boat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -212,15 +212,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a36453e121acaab43996e5e65b7ff4b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  randomRippleIntervalTime: 0
+  isReversedRipple: 0
+  rippleStrenght: 0.1
   maxSpeed: 1.5
+  randomRipplesInterval: 0
   reversedRippleDelay: 0.2
-  splashSizeMultiplier: 2
   splashEffect: {fileID: 129212, guid: bd3bf0ad7039cae4e92bd458f39aa86f, type: 2}
   splashEffectMoved: {fileID: 138562, guid: b10c4612fa59ff74891d70da2af48027, type: 2}
-  isReversedRipple: 0
   splashAudioSource: {fileID: 0}
-  rippleStrength: 0.1
+  splashSizeMultiplier: 2
 --- !u!114 &114268084880208128
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -232,15 +232,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a36453e121acaab43996e5e65b7ff4b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  randomRippleIntervalTime: 0
+  isReversedRipple: 0
+  rippleStrenght: 0.1
   maxSpeed: 1.5
+  randomRipplesInterval: 0
   reversedRippleDelay: 0.2
-  splashSizeMultiplier: 2
   splashEffect: {fileID: 129212, guid: bd3bf0ad7039cae4e92bd458f39aa86f, type: 2}
   splashEffectMoved: {fileID: 138562, guid: b10c4612fa59ff74891d70da2af48027, type: 2}
-  isReversedRipple: 0
   splashAudioSource: {fileID: 0}
-  rippleStrength: 0.1
+  splashSizeMultiplier: 2
 --- !u!114 &114344004412847058
 MonoBehaviour:
   m_ObjectHideFlags: 1
