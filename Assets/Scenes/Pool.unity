@@ -1589,6 +1589,7 @@ GameObject:
   - component: {fileID: 1671793487}
   - component: {fileID: 1671793493}
   - component: {fileID: 1671793492}
+  - component: {fileID: 1671793486}
   m_Layer: 4
   m_Name: Water
   m_TagString: Untagged
@@ -1613,6 +1614,22 @@ Transform:
   m_Father: {fileID: 2135040782}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1671793486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1671793484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e1bdfd353b351246a35e99ee69bda26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FogColor: {r: 0.34117648, g: 0.74509805, b: 0.85882354, a: 1}
+  FogDensity: 0.05
+  UseSunShafts: 1
+  SunShuftsIntensity: 1.5
+  SunShuftsScreenBlendMode: 0
 --- !u!114 &1671793487
 MonoBehaviour:
   m_ObjectHideFlags: 0

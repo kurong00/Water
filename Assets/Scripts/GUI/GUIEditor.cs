@@ -21,7 +21,7 @@ public class GUIEditor : MonoBehaviour {
     private GUIStyle guiStyleHeader = new GUIStyle();
     private Material currentWaterMaterial, causticMaterial;
     private GameObject currentWater;
-    private float transparent, fadeBlend, refl, refraction;
+    private float transparent, fadeBlend, refl, foam;
     private float waterWaveScaleXZ = 1;
     private Vector4 waterDirection, causticDirection, foamDirection, ABDirection, CDDirection;
     private float direction = 1;
@@ -53,7 +53,7 @@ public class GUIEditor : MonoBehaviour {
         refl = currentWaterMaterial.GetColor("_ReflectionColor").r;
         if (!IsMobileScene) transparent = currentWaterMaterial.GetFloat("_TransperentDepth");
         if (!IsMobileScene) fadeBlend = currentWaterMaterial.GetFloat("_FadeDepth");
-        refraction = currentWaterMaterial.GetFloat("_DistortionNormal");
+        foam = currentWaterMaterial.GetFloat("_DistortionNormal");
         oldTextureScale = currentWaterMaterial.GetFloat("_TexturesScale");
         oldWaveScale = currentWaterMaterial.GetFloat("_WaveScale");
         var infiniteMesh = GameObject.Find("InfiniteWaterMesh");
@@ -100,7 +100,8 @@ public class GUIEditor : MonoBehaviour {
             caustic.SetActive(!caustic.activeSelf);
         }
         var labelTexColor = new GUIStyle();
-        labelTexColor.normal.textColor = new Color(1, 1, 1);
+        labelTexColor.normal.textColor = Color.white;
+        labelTexColor.fontSize = 25;
 
         angle = GUI.HorizontalSlider(new Rect(10, 102, 120, 15), angle, 30, 240);
         GUI.Label(new Rect(140, 100, 30, 30), "Day Time", labelTexColor);
@@ -114,9 +115,9 @@ public class GUIEditor : MonoBehaviour {
         GUI.Label(new Rect(140, 120, 30, 30), "Reflection", labelTexColor);
         currentWaterMaterial.SetColor("_ReflectionColor", reflectionColor);
 
-        refraction = GUI.HorizontalSlider(new Rect(10, 142, 120, 15), refraction, 0, 700);
-        GUI.Label(new Rect(140, 140, 30, 30), "Distortion", labelTexColor);
-        currentWaterMaterial.SetFloat("_Distortion", refraction);
+        foam = GUI.HorizontalSlider(new Rect(10, 142, 120, 15), foam, 0, 700);
+        GUI.Label(new Rect(140, 140, 30, 30), "Foam", labelTexColor);
+        currentWaterMaterial.SetFloat("_FoamIntensity", foam);
 
         waterWaveScaleXZ = GUI.HorizontalSlider(new Rect(10, 162, 120, 15), waterWaveScaleXZ, 0.3f, 3);
         GUI.Label(new Rect(140, 160, 30, 30), "Scale", labelTexColor);
@@ -128,16 +129,22 @@ public class GUIEditor : MonoBehaviour {
 
     void GUIPC()
     {
+        var buttonStyle = new GUIStyle(GUI.skin.button);
+        buttonStyle.normal.textColor = Color.white;
+        buttonStyle.fontSize = 20;
+        buttonStyle.padding = new RectOffset(5, 5, 5, 5);
         if (currentWaterMaterial == null)
             return;
-        if (GUI.Button(new Rect(10, 35, 150, 40), "Change Scene "))
+        if (GUI.Button(new Rect(10, 35, 200, 50), "Change Scene ", buttonStyle))
         {
-            SceneManager.LoadScene((SceneManager.GetActiveScene().buildIndex + 1) % SceneManager.sceneCountInBuildSettings);
+            SceneManager.LoadScene((SceneManager.GetActiveScene().buildIndex + 1) % 
+                SceneManager.sceneCountInBuildSettings);
             UpdateCurrentWater();
         }
 
         var labelTexColor = new GUIStyle();
-        labelTexColor.normal.textColor = new Color(1, 1, 1);
+        labelTexColor.normal.textColor = Color.white;
+        labelTexColor.fontSize = 20;
 
         angle = GUI.HorizontalSlider(new Rect(10, 102, 120, 15), angle, 30, 240);
         GUI.Label(new Rect(140, 100, 30, 30), "Day Time", labelTexColor);
@@ -145,27 +152,26 @@ public class GUIEditor : MonoBehaviour {
         Sun.intensity = Mathf.Clamp01(intensity) * startSunIntencity + 0.05f;
         SunTransform.transform.rotation = Quaternion.Euler(0, 0, angle);
 
-        transparent = GUI.HorizontalSlider(new Rect(10, 122, 120, 15), transparent, 0, 1);
-        GUI.Label(new Rect(140, 120, 30, 30), "Depth Transperent", labelTexColor);
-        currentWaterMaterial.SetFloat("_DepthTransperent", transparent);
+        transparent = GUI.HorizontalSlider(new Rect(10, 132, 120, 15), transparent, 0, 1);
+        GUI.Label(new Rect(140, 130, 30, 30), "Depth Transperent", labelTexColor);
+        currentWaterMaterial.SetFloat("_TransperentDepth", transparent);
 
-        fadeBlend = GUI.HorizontalSlider(new Rect(10, 142, 120, 15), fadeBlend, 0, 1);
-        GUI.Label(new Rect(140, 140, 30, 30), "Fade Depth", labelTexColor);
+        fadeBlend = GUI.HorizontalSlider(new Rect(10, 162, 120, 15), fadeBlend, 0, 1);
+        GUI.Label(new Rect(140, 160, 30, 30), "Fade Depth", labelTexColor);
         currentWaterMaterial.SetFloat("_FadeDepth", fadeBlend);
 
-        refl = GUI.HorizontalSlider(new Rect(10, 162, 120, 15), refl, 0, 1);
+        refl = GUI.HorizontalSlider(new Rect(10, 192, 120, 15), refl, 0, 1);
         reflectionColor = new Color(refl, refl, refl, 1);
-        GUI.Label(new Rect(140, 160, 30, 30), "Reflection", labelTexColor);
+        GUI.Label(new Rect(140, 190, 30, 30), "Reflection", labelTexColor);
         currentWaterMaterial.SetColor("_ReflectionColor", reflectionColor);
 
-        refraction = GUI.HorizontalSlider(new Rect(10, 182, 120, 15), refraction, 0, 700);
-        GUI.Label(new Rect(140, 180, 30, 30), "Distortion", labelTexColor);
-        currentWaterMaterial.SetFloat("_Distortion", refraction);
+        foam = GUI.HorizontalSlider(new Rect(10, 222, 120, 15), foam, 0, 700);
+        GUI.Label(new Rect(140, 220, 30, 30), "Foam", labelTexColor);
+        currentWaterMaterial.SetFloat("_FoamIntensity", foam);
+        
+        waterWaveScaleXZ = GUI.HorizontalSlider(new Rect(10, 252, 120, 15), waterWaveScaleXZ, 0.3f, 3);
+        GUI.Label(new Rect(140, 250, 30, 30), "Scale", labelTexColor);
 
-        waterWaveScaleXZ = GUI.HorizontalSlider(new Rect(10, 202, 120, 15), waterWaveScaleXZ, 0.3f, 3);
-        GUI.Label(new Rect(140, 200, 30, 30), "Scale", labelTexColor);
-
-        //projectorScale.transform.localScale = new Vector3(waterWaveScaleXZ * oldProjectorScale.x, waterWaveScaleXZ * oldProjectorScale.y, waterWaveScaleXZ * oldProjectorScale.z);
         currentWaterMaterial.SetFloat("_WaveScale", oldWaveScale * waterWaveScaleXZ);
         currentWaterMaterial.SetFloat("_TexturesScale", oldTextureScale * waterWaveScaleXZ);
 
@@ -177,9 +183,8 @@ public class GUIEditor : MonoBehaviour {
             caustic.GetComponent<ProjectorMatrix>().UpdateMatrix();
         }
 
-        //Water Direction
-        direction = GUI.HorizontalSlider(new Rect(10, 222, 120, 15), direction, 1, -1);
-        GUI.Label(new Rect(140, 220, 30, 30), "Direction", labelTexColor);
+        direction = GUI.HorizontalSlider(new Rect(10, 282, 120, 15), direction, 1, -1);
+        GUI.Label(new Rect(140, 280, 30, 30), "Direction", labelTexColor);
         currentWaterMaterial.SetVector("_Direction", waterDirection * direction);
         currentWaterMaterial.SetVector("_FoamDirection", foamDirection * direction);
         causticMaterial.SetVector("_CausticDirection", causticDirection * direction);

@@ -171,7 +171,7 @@ Shader "WaterShader/Water" {
 				half3 normal2 = UnpackNormal(tex2D(_Wave2, i.uvWave2.xy + normal1));
 				half3 normal3 = UnpackNormal(tex2D(_Wave2, i.uvWave2.xy/2-_Time.xx * _Direction.zw + normal2.xy));
 				half fresnel = pow(1-max(0,normal2*i.viewDir),4);
-				float2 offset = normal2.xy*_Direction /1000;
+				float2 offset = normal2.xy*_DistortionNormal /1000;
 				#if ripples_on
 				offset += clamp(i.uvWave2.z*normal1 * 4 + i.uvWave2.z* i.uvWave2.z * 5, 0, 0.4);
 				#endif

@@ -133,11 +133,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   colorSpace: {fileID: 2800000, guid: 48058c3b52557df42bd88cf1860a9fa2, type: 3}
   alphaGradient: {fileID: 2800000, guid: 489a8d8d475f05249804746275821bdd, type: 3}
-  Title: Background Color
-  startPos: {x: 20, y: 450}
-  receiver: {fileID: 0}
-  colorSetFunctionName: OnSetColor
-  colorGetFunctionName: OnGetColor
+  Title: Fade Color
+  startPos: {x: 10, y: 370}
+  receiver: {fileID: 1624906938966310}
+  colorSetFunctionName: OnSetColorFade
+  colorGetFunctionName: OnGetColorFade
   useExternalDrawer: 0
   drawOrder: 0
 --- !u!114 &114855904896353100
@@ -153,10 +153,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   colorSpace: {fileID: 2800000, guid: 48058c3b52557df42bd88cf1860a9fa2, type: 3}
   alphaGradient: {fileID: 2800000, guid: 489a8d8d475f05249804746275821bdd, type: 3}
-  Title: Background Color
-  startPos: {x: 20, y: 400}
-  receiver: {fileID: 0}
-  colorSetFunctionName: OnSetColor
-  colorGetFunctionName: OnGetColor
+  Title: Main Color
+  startPos: {x: 10, y: 320}
+  receiver: {fileID: 1624906938966310}
+  colorSetFunctionName: OnSetColorMain
+  colorGetFunctionName: OnGetColorMain
   useExternalDrawer: 0
   drawOrder: 0
