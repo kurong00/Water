@@ -13,7 +13,10 @@ public class ColorPicker : MonoBehaviour {
 	public bool useExternalDrawer = false;
 	public int drawOrder = 0;
 
-	Color TempColor; 
+    const int buttonWide = 60;
+    const int buttonHigh = 40;
+    const int textPadding = 60;
+    Color TempColor; 
 	Color SelectedColor;
 	static ColorPicker activeColorPicker = null;
 
@@ -26,8 +29,8 @@ public class ColorPicker : MonoBehaviour {
 	}; 
 	ESTATE mState = ESTATE.Hidden;
 	
-	int sizeFull = 200;
-	int sizeHidden = 20;
+	int sizeFull = 400;
+	int sizeHidden = 40;
 	float animTime = 0.25f;
 	float dt = 0;
 
@@ -35,6 +38,8 @@ public class ColorPicker : MonoBehaviour {
 	float alphaGradientHeight = 16;
 
 	GUIStyle titleStyle = null;
+    GUIStyle textStyle = null;
+    GUIStyle buttonStyle = null;
     Color textColor = Color.white;
 	Texture2D txColorDisplay;
 
@@ -111,26 +116,40 @@ public class ColorPicker : MonoBehaviour {
         {
             titleStyle = new GUIStyle(GUI.skin.label);
             titleStyle.normal.textColor = textColor;
+            titleStyle.fontSize = 25;
         }
-
+        if (textStyle == null)
+        {
+            textStyle = new GUIStyle(GUI.skin.textField);
+            textStyle.normal.textColor = textColor;
+            textStyle.fontSize = 25;
+            textStyle.padding = new RectOffset(5,5,5,5);
+        }
+        if (buttonStyle == null)
+        {
+            buttonStyle = new GUIStyle(GUI.skin.button);
+            buttonStyle.normal.textColor = textColor;
+            buttonStyle.fontSize = 25;
+            buttonStyle.padding = new RectOffset(5, 5, 5, 5);
+        }
         Rect rectColorEdit = new Rect(startPos.x + sizeCurrent + 10, startPos.y + 30, 40, 140);
         Rect rectColorSlider = new Rect(startPos.x + sizeCurrent + 50, startPos.y + 30, 60, 140);
 
-        GUI.Label(new Rect(startPos.x + sizeCurrent + 60, startPos.y, 200, 30), Title, titleStyle);
+        GUI.Label(new Rect(startPos.x + sizeCurrent + 80, startPos.y, 200, 30), Title, titleStyle);
 
-        GUI.DrawTexture(new Rect(startPos.x + sizeCurrent + 10, startPos.y, 40, 20), txColorDisplay);
+        GUI.DrawTexture(new Rect(startPos.x + sizeCurrent + 10, startPos.y, 60, 40), txColorDisplay);
 
         if (mState == ESTATE.Showed)
         {
-            txtR = GUI.TextField(new Rect(startPos.x + sizeCurrent + 10, startPos.y + 30, 40, 20), txtR, 3);
-            txtG = GUI.TextField(new Rect(startPos.x + sizeCurrent + 10, startPos.y + 60, 40, 20), txtG, 3);
-            txtB = GUI.TextField(new Rect(startPos.x + sizeCurrent + 10, startPos.y + 90, 40, 20), txtB, 3);
-            txtA = GUI.TextField(new Rect(startPos.x + sizeCurrent + 10, startPos.y + 120, 40, 20), txtA, 3);
-            valR = GUI.HorizontalSlider(new Rect(startPos.x + sizeCurrent + 50, startPos.y + 35, 60, 20), valR, 0.0f, 1.0f);
-            valG = GUI.HorizontalSlider(new Rect(startPos.x + sizeCurrent + 50, startPos.y + 65, 60, 20), valG, 0.0f, 1.0f);
-            valB = GUI.HorizontalSlider(new Rect(startPos.x + sizeCurrent + 50, startPos.y + 95, 60, 20), valB, 0.0f, 1.0f);
-            valA = GUI.HorizontalSlider(new Rect(startPos.x + sizeCurrent + 50, startPos.y + 125, 60, 20), valA, 0.0f, 1.0f);
-            if (GUI.Button(new Rect(startPos.x + sizeCurrent + 10, startPos.y + 150, 60, 20), "Apply"))
+            txtR = GUI.TextField(new Rect(startPos.x + sizeCurrent + 10, startPos.y + textPadding * 1, buttonWide,buttonHigh), txtR, 3, textStyle);
+            txtG = GUI.TextField(new Rect(startPos.x + sizeCurrent + 10, startPos.y + textPadding * 2, buttonWide,buttonHigh), txtG, 3, textStyle);
+            txtB = GUI.TextField(new Rect(startPos.x + sizeCurrent + 10, startPos.y + textPadding * 3, buttonWide,buttonHigh), txtB, 3, textStyle);
+            txtA = GUI.TextField(new Rect(startPos.x + sizeCurrent + 10, startPos.y + textPadding * 4, buttonWide,buttonHigh), txtA, 3, textStyle);
+            valR = GUI.HorizontalSlider(new Rect(startPos.x + sizeCurrent + 80, startPos.y + textPadding * 1+10, 60, 20), valR, 0.0f, 1.0f);
+            valG = GUI.HorizontalSlider(new Rect(startPos.x + sizeCurrent + 80, startPos.y + textPadding * 2+10, 60, 20), valG, 0.0f, 1.0f);
+            valB = GUI.HorizontalSlider(new Rect(startPos.x + sizeCurrent + 80, startPos.y + textPadding * 3+10, 60, 20), valB, 0.0f, 1.0f);
+            valA = GUI.HorizontalSlider(new Rect(startPos.x + sizeCurrent + 80, startPos.y + textPadding * 4+10, 60, 20), valA, 0.0f, 1.0f);
+            if (GUI.Button(new Rect(startPos.x + sizeCurrent + 10, startPos.y + textPadding * 5, 100, 60), "Apply", buttonStyle))
             {
                 ApplyColor();
                 SelectedColor = TempColor;
