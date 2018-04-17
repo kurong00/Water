@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GUIEditor : MonoBehaviour {
+public class GUIEditor : MonoBehaviour
+{
 
     public float UpdateInterval = 0.5F;
     public int MaxScenes = 3;
@@ -16,30 +17,32 @@ public class GUIEditor : MonoBehaviour {
     public GameObject water2;
     public float angle = 130;
 
-    private bool canUpdateTestMaterial;
-    private GameObject cam;
-    private GUIStyle guiStyleHeader = new GUIStyle();
-    private Material currentWaterMaterial, causticMaterial;
-    private GameObject currentWater;
-    private float transparent, fadeBlend, refl, foam;
-    private float waterWaveScaleXZ = 1;
-    private Vector4 waterDirection, causticDirection, foamDirection, ABDirection, CDDirection;
-    private float direction = 1;
-    private Color reflectionColor;
-    private Vector3 oldCausticScale;
-    private float oldTextureScale, oldWaveScale;
-    private GameObject caustic;
-    private float startSunIntencity;
+    bool canUpdateTestMaterial;
+    GameObject cam;
+    GUIStyle guiStyleHeader = new GUIStyle();
+    Material currentWaterMaterial, causticMaterial;
+    GameObject currentWater;
+    float transparent, fadeBlend, refl, foam;
+    float waterWaveScaleXZ = 1;
+    Vector4 waterDirection, causticDirection, foamDirection, ABDirection, CDDirection;
+    float direction = 1;
+    Color reflectionColor;
+    Vector3 oldCausticScale;
+    float oldTextureScale, oldWaveScale;
+    GameObject caustic;
+    float startSunIntencity;
+
+    GUIStyle buttonStyle = null;
 
 
-    private void Start()
+    void Start()
     {
         guiStyleHeader.fontSize = 18;
         guiStyleHeader.normal.textColor = new Color(1, 0, 0);
         UpdateCurrentWater();
     }
 
-    private void UpdateCurrentWater()
+    void UpdateCurrentWater()
     {
         if (Boat != null)
         {
@@ -72,20 +75,24 @@ public class GUIEditor : MonoBehaviour {
         CDDirection = currentWaterMaterial.GetVector("_DirectionCD");
     }
 
-    private void OnGUI()
+    void OnGUI()
     {
+        buttonStyle = new GUIStyle(GUI.skin.button);
+        buttonStyle.normal.textColor = Color.white;
+        buttonStyle.fontSize = 20;
+        buttonStyle.padding = new RectOffset(5, 5, 5, 5);
         if (IsMobileScene)
             GUIMobile();
         else
             GUIPC();
     }
 
-    private void GUIMobile()
+    void GUIMobile()
     {
         if (currentWaterMaterial == null)
             return;
 
-        if (GUI.Button(new Rect(10, 35, 150, 40), "On/Off Ripples"))
+        if (GUI.Button(new Rect(10, 35, 150, 40), "On/Off Ripples", buttonStyle))
         {
             caustic.SetActive(true);
             water1.SetActive(!water1.activeSelf);
@@ -95,7 +102,7 @@ public class GUIEditor : MonoBehaviour {
                 caustic.SetActive(false);
         }
 
-        if (GUI.Button(new Rect(10, 190, 150, 40), "On/Off caustic"))
+        if (GUI.Button(new Rect(10, 190, 150, 40), "On/Off caustic", buttonStyle))
         {
             caustic.SetActive(!caustic.activeSelf);
         }
@@ -129,15 +136,12 @@ public class GUIEditor : MonoBehaviour {
 
     void GUIPC()
     {
-        var buttonStyle = new GUIStyle(GUI.skin.button);
-        buttonStyle.normal.textColor = Color.white;
-        buttonStyle.fontSize = 20;
-        buttonStyle.padding = new RectOffset(5, 5, 5, 5);
+
         if (currentWaterMaterial == null)
             return;
         if (GUI.Button(new Rect(10, 35, 200, 50), "Change Scene ", buttonStyle))
         {
-            SceneManager.LoadScene((SceneManager.GetActiveScene().buildIndex + 1) % 
+            SceneManager.LoadScene((SceneManager.GetActiveScene().buildIndex + 1) %
                 SceneManager.sceneCountInBuildSettings);
             UpdateCurrentWater();
         }
@@ -168,7 +172,7 @@ public class GUIEditor : MonoBehaviour {
         foam = GUI.HorizontalSlider(new Rect(10, 222, 120, 15), foam, 0, 700);
         GUI.Label(new Rect(140, 220, 30, 30), "Foam", labelTexColor);
         currentWaterMaterial.SetFloat("_FoamIntensity", foam);
-        
+
         waterWaveScaleXZ = GUI.HorizontalSlider(new Rect(10, 252, 120, 15), waterWaveScaleXZ, 0.3f, 3);
         GUI.Label(new Rect(140, 250, 30, 30), "Scale", labelTexColor);
 
@@ -192,28 +196,28 @@ public class GUIEditor : MonoBehaviour {
         currentWaterMaterial.SetVector("_DirectionCD", CDDirection * direction);
     }
 
-    private void OnDestroy()
+    void OnDestroy()
     {
         if (!IsMobileScene) causticMaterial.SetVector("_CausticDirection", causticDirection);
     }
 
-    private void OnSetColorMain(Color color)
+    void OnSetColorMain(Color color)
     {
         currentWaterMaterial.SetColor("_Color", color);
     }
 
-    private void OnGetColorMain(ColorPicker picker)
+    void OnGetColorMain(ColorPicker picker)
     {
         if (picker != null && currentWaterMaterial != null)
             picker.NotifyColor(currentWaterMaterial.GetColor("_Color"));
     }
 
-    private void OnSetColorFade(Color color)
+    void OnSetColorFade(Color color)
     {
         currentWaterMaterial.SetColor("_FadeColor", color);
     }
 
-    private void OnGetColorFade(ColorPicker picker)
+    void OnGetColorFade(ColorPicker picker)
     {
         if (picker != null && currentWaterMaterial != null)
             picker.NotifyColor(currentWaterMaterial.GetColor("_FadeColor"));

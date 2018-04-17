@@ -113,7 +113,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UpdateInterval: 0.5
   MaxScenes: 3
-  IsMobileScene: 0
+  IsMobileScene: 1
   Sun: {fileID: 0}
   SunTransform: {fileID: 0}
   Boat: {fileID: 0}
